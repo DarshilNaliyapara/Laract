@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->string('posts');
             $table->string('slug')->unique();
-            $table->string('photo_name');
+            $table->string('photo_name')->nullable();
             $table->timestamps();
         });
     }

@@ -15,6 +15,10 @@ class Blog extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 
     // A Blog belongs to a User
     public function user()

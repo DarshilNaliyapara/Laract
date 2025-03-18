@@ -67,7 +67,10 @@
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
+
+
 @layer base {
+
     *,
     ::after,
     ::before,
@@ -113,7 +116,33 @@
     --sidebar-ring: oklch(0.87 0 0);
 }
 
+/* Fullscreen zoom effect */
+.iiz__zoom-portal {
+    background: rgba(0, 0, 0, 0.7) !important;
+    /* Dark semi-transparent background */
+    backdrop-filter: blur(10px) !important;
+    /* Blur effect */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 9999 !important;
+}
+
+/* Ensure zoomed image takes full screen */
+.iiz__img {
+    max-width: 90vw !important;
+    max-height: 90vh !important;
+    object-fit: contain !important;
+}
+
 .dark {
+
+
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
     --card: oklch(0.145 0 0);
@@ -156,4 +185,5 @@
     body {
         @apply bg-background text-foreground;
     }
+
 }

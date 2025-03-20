@@ -2,14 +2,16 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { Card, CardContent } from "@/components/ui/card";
-import { useEffect, useState } from 'react';
-import { type SharedData } from '@/types';
 import { Pencil, Trash2, MessageCircle } from "lucide-react";
+import { useEffect, useState } from 'react';
 import { router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
+import { type SharedData } from '@/types';
 import Comments from '@/components/comment';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -31,17 +33,17 @@ interface Blog {
     }
     liked: boolean;
     likeCount: number;
-    comments: string;
-
+    commentCount: number;
+    comments:string;
 }
 
 export default function PostShow({ blog }: { blog: Blog }) {
-    const postContent = JSON.parse(blog.posts);
-    const [formattedPost, setFormattedPost] = useState("");
-    const imgSrc = `/storage/${blog.photo_name}`;
     const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
     const { auth } = usePage<SharedData>().props;
+    const postContent = JSON.parse(blog.posts);
+    const [formattedPost, setFormattedPost] = useState("");
+    const imgSrc = `/storage/${blog.photo_name}`;
 
     useEffect(() => {
         const linkedPost = postContent.post
@@ -58,6 +60,7 @@ export default function PostShow({ blog }: { blog: Blog }) {
             <Head title="Posts" />
 
             <div className="flex h-auto flex-1 flex-col gap-4 rounded-xl p-4">
+
                 <Card key={blog.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
                     <CardContent className="p-3">
                         <div className="flex flex-col">
@@ -117,12 +120,28 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                 </div>
                             </div>
                             {commentingPost && (
-                                <Comments postId={blog.id} comments={Array.isArray(blog.comments) ? blog.comments : []} authUserId={auth.user.id} />
+                            <Comments postId={blog.id} comments={Array.isArray(blog.comments) ? blog.comments : []} authUserId={auth.user.id} />
                             )}
-                        </div>
+                            </div>
                     </CardContent>
                 </Card>
+                <div className="mt-6">
+
+                    <div className="p-4">
+                        <ResponsiveContainer width="100%" height={250}>
+                            <BarChart data={[
+                                { name: 'Likes', value: blog.likeCount },
+                                { name: 'Comments', value: blog.commentCount }
+                            ]}>
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Bar dataKey="value" fill="#8884d8" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
             </div>
-        </AppLayout >
+        </AppLayout>
     );
 }

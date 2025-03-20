@@ -7,7 +7,7 @@ import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { router } from '@inertiajs/react';
+import { router,Link } from '@inertiajs/react';
 import Swal from "sweetalert2";
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -150,11 +150,15 @@ export default function PostEdit({ blog }: { blog: Blog }) {
                                     {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                                     Save
                                 </Button>
-                                <a href={route('home')}>
-                                    <Button type="button" className="mt-2 w-20 bg-red-700 text-gray-200 cursor-pointer dark:hover:bg-red-800">
+                                
+                                <Link href={route('home')} prefetch>
+                                <Button type="button" className="mt-2 w-20 bg-red-700 text-gray-200 cursor-pointer dark:hover:bg-red-800">
                                         Cancel
                                     </Button>
-                                </a>
+                                                        </Link>
+
+                                   
+                                
                             </div>
 
                         </div>

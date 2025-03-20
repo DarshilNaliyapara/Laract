@@ -18,10 +18,10 @@ const Pagination: React.FC<PaginationProps> = ({ links, currentPage, setCurrentP
     const handlePageChange = (url: string) => {
         const pageParam = new URL(url).searchParams.get('page');
         setCurrentPage(pageParam ? parseInt(pageParam, 10) : 1);
-        router.get(url,{preserveState:true});
+        router.get(url);
     }
     return (
-        <nav className="flex justify-center mt-5">
+        <nav className="flex justify-center  mb-6">
             {links.map(link => (
                 <Link
                 key={link.label}

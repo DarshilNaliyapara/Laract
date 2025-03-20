@@ -25,11 +25,11 @@ class CommentController extends Controller
             'comment' => $validated['comment'],
         ]);
 
-        return redirect(route('blogs.index'))->with('status', 'Comment added successfully!');
-    }
+        return redirect()->back()->with('status', 'Comment added successfully!');
+    }   
     public function destroy(Comment $comment){
         $comment->delete();
-        return redirect(route('dashboard'));
+        return redirect()->back();
     }
 
 }

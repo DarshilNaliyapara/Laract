@@ -30,6 +30,7 @@ class BlogController extends Controller
         $posts->getCollection()->transform(function ($post) {
             $post->likeCount = $post->likes()->count();
             $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
+            $post->comments = $post->comments()->with('user:id,name')->get();
             return $post;
         });
         return Inertia::render('posts', [
@@ -45,10 +46,6 @@ class BlogController extends Controller
         if (!Gate::allows('update-post', $blog)) {
             abort(401);
         }
-
-        $val = json_decode($blog->posts, true);
-        $posts = Auth::user()->blog()->with('user')->latest()->paginate(2);
-
         return Inertia::render('edit', [
 
             'blog' => $blog
@@ -126,8 +123,8 @@ class BlogController extends Controller
         $latest = Blog::where('slug', $blog->slug)
             ->with('user:id,name')
             ->firstOrFail(); // Retrieve a single blog post
-        $latest->likeCount = $latest->likes()->count();
-        $latest->liked = $latest->likes()->where('user_id', auth()->id())->exists();
+        $latest->comments = $latest->comments()->with('user:id,name')->get();
+          
         return Inertia::render('show', [
 
             'blog' => $latest
@@ -139,7 +136,7 @@ class BlogController extends Controller
 
 
         if ($blog->photo_name) {
-            $path = "files/{$blog->photo_name}"; // Ensure correct path
+            $path = "{$blog->photo_name}"; // Ensure correct path
 
             Log::info("Checking path: " . $path);
             Log::info("File exists? => " . (Storage::disk('public')->exists($path) ? 'true' : 'false'));
@@ -172,5 +169,20 @@ class BlogController extends Controller
             ->delete();
 
         return redirect()->back()->with('success', 'Post liked successfully.');
+    }
+    public function adminshow(Blog $blog){
+          $latest = Blog::where('slug', $blog->slug)
+                ->with('user:id,name')
+                ->firstOrFail(); // Retrieve a single blog post
+            $latest->likeCount = $latest->likes()->count();
+            $latest->liked = $latest->likes()->where('user_id', auth()->id())->exists();
+            $latest->commentCount = $latest->comments()->count();
+            $latest->comments = $latest->comments()->with('user:id,name')->get();
+            return Inertia::render('admin-show', [
+    
+                'blog' => $latest
+            ]);
+    
+        
     }
 }

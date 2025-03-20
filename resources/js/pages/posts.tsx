@@ -1,8 +1,8 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useState } from 'react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Pencil, Trash2, MessageCircle } from "lucide-react";
 import { router } from '@inertiajs/react';
 import Swal from "sweetalert2";
+import { Link } from '@inertiajs/react';
+import { type SharedData } from '@/types';
+import Comments from '@/components/comment';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -40,6 +43,7 @@ interface Post {
   slug: string;
   liked: boolean;
   likeCount: number;
+  comments: string;
 }
 
 interface Link {
@@ -62,6 +66,8 @@ export default function Posts({ posts }: { posts: PostsData }) {
     file: null,
     page: posts.current_page
   });
+  const { auth } = usePage<SharedData>().props;
+  const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
   const formattedPosts = Array.isArray(posts.data) ? posts.data : [];
 
@@ -155,6 +161,11 @@ export default function Posts({ posts }: { posts: PostsData }) {
   };
 
 
+  const toggleComment = (postId: number) => {
+    setCommentingPost(commentingPost === postId ? null : postId);
+  };
+
+
 
   return (
 
@@ -225,6 +236,7 @@ export default function Posts({ posts }: { posts: PostsData }) {
         {formattedPosts.length > 0 ? (
           formattedPosts.map((post) => {
             const postContent = JSON.parse(post.posts);
+            const formattedComments = Array.isArray(post.comments) ? post.comments : [];
 
             return (
 
@@ -285,11 +297,11 @@ export default function Posts({ posts }: { posts: PostsData }) {
                       <small className="text-sm text-gray-400 dark:text-gray-500"> &middot; edited</small>
                     )}
                     <div className='ml-5'>
-                      <a href={route('blogs.show', post.slug)}>
+                      <Link href={route('blogs.show', post.slug)}>
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-white underline">
                           {postContent.title}
                         </h2>
-                      </a>
+                      </Link>
                       {/* Post Image */}
                       {post.photo_name && (
                         <div className="flex flex-wrap gap-4 mt-3">
@@ -313,16 +325,22 @@ export default function Posts({ posts }: { posts: PostsData }) {
                       ></p>
                       {/* Post Actions */}
                       <div className="mt-4 flex gap-3">
-                        <Button variant="outline" size="sm" className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="flex items-center gap-2"
+                          onClick={() => toggleComment(post.id)}
+                        >
                           <MessageCircle className="w-4 h-4" />
-                          Comment
+                          Comments
                         </Button>
-                        <a href={route('blogs.edit', post.slug)}>
-                          <Button variant="outline" size="sm" className="flex items-center gap-2 text-blue-600 border-blue-600 cursor-pointer">
+                        <Link href={route('blogs.edit', post.slug)}>
+                          <Button variant="outline" size="sm" className="flex cursor-pointer items-center gap-2 text-blue-600 border-blue-600">
                             <Pencil className="w-4 h-4" />
                             Edit
                           </Button>
-                        </a>
+                        </Link>
+
                         <form id="dlt-form" onSubmit={(e) => {
                           e.preventDefault();
                           deleteblog(post.slug);
@@ -339,6 +357,9 @@ export default function Posts({ posts }: { posts: PostsData }) {
                         </form>
                       </div>
                     </div>
+                    {commentingPost === post.id && (
+                      <Comments postId={post.id} comments={Array.isArray(post.comments) ? post.comments : []} authUserId={auth.user.id} />
+                    )}
                   </div>
                 </CardContent>
               </Card>

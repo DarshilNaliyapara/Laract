@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Blog extends Model
 {  protected $fillable = ['posts','user_id','slug','photo_name'];
-
+    use HasFactory;
     public function getRouteKeyName()
     {
         return 'slug';

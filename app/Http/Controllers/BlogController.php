@@ -69,8 +69,8 @@ class BlogController extends Controller
 
         $slug = Str::slug($uuid);
         if ($file) {
-            $name = $file->getClientOriginalName();
-            $path = $request->file('file')->storeAs('files', $name, 'public');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $request->file('file')->storeAs('files',$filename, 'public');
             $blog = $request->user()->blog()->create(['posts' => json_encode($validated), 'slug' => $slug, 'photo_name' => $path]);
         } else {
             $blog = $request->user()->blog()->create(['posts' => json_encode($validated), 'slug' => $slug]);
@@ -106,8 +106,8 @@ class BlogController extends Controller
                     Storage::disk('public')->delete($path); // Delete file
                 }
             }
-            $name = $file->getClientOriginalName();
-            $path = $request->file('file')->storeAs('files', $name, 'public');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $request->file('file')->storeAs('files', $filename, 'public');
             $blog->update(['posts' => json_encode($validated), 'slug' => $slug, 'photo_name' => $path]);
         } else {
 

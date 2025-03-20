@@ -10,7 +10,6 @@ import { type SharedData } from '@/types';
 import Comments from '@/components/comment';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
-
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 
 const breadcrumbs: BreadcrumbItem[] = [

@@ -68,6 +68,7 @@ export default function Posts({ posts }: { posts: PostsData }) {
   });
   const { auth } = usePage<SharedData>().props;
   const [commentingPost, setCommentingPost] = useState<number | null>(null);
+  const [filepreview, setImagepreview] = useState<string | null>(null);
 
   const formattedPosts = Array.isArray(posts.data) ? posts.data : [];
 
@@ -77,6 +78,7 @@ export default function Posts({ posts }: { posts: PostsData }) {
     const file = e.target.files?.[0];
     if (file) {
       setData('file', file);
+      setImagepreview(URL.createObjectURL(file));
     }
   };
   const like = (slug: string) => {
@@ -221,7 +223,16 @@ export default function Posts({ posts }: { posts: PostsData }) {
                 />
                 <InputError message={errors.file} />
               </div>
+              {filepreview && <div className="flex flex-wrap gap-4 mt-3">
+                <div className="relative w-full md:w-1/2 lg:w-1/3">
 
+                  <img
+                    src={filepreview}
+                    alt="Blog Preview"
+                    className="cursor-pointer rounded-lg shadow-lg object-cover w-full h-full"
+                  />
+                </div>
+              </div>}
 
               <Button type="submit" className="mt-2 w-20 cursor-pointer" tabIndex={5} disabled={processing}>
                 {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}

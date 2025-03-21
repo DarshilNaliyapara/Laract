@@ -71,7 +71,15 @@ npm run dev
 
 ## 📷 Screenshots
 ![Homepage Screenshot](Screenshots/Home.png)
+![Commenting System](Screenshots/Guest.png)
+![Commenting System](Screenshots/Dashboard.png)
+![Commenting System](Screenshots/Post.png)
+![Commenting System](Screenshots/Edit(with_image).png)
 ![Commenting System](Screenshots/Blog_Comment.png)
+![Commenting System](Screenshots/Login.png)
+![Commenting System](Screenshots/Register.png)
+![Commenting System](Screenshots/Email_for_Verification.png)
+![Commenting System](Screenshots/Email_Verify.png)
 
 ## 📜 License
 This project is licensed under the [MIT License](LICENSE).
@@ -80,5 +88,5 @@ This project is licensed under the [MIT License](LICENSE).
 Pull requests are welcome! Please follow the standard contribution guidelines.
 
 ## 📧 Contact
-For any inquiries, reach out to [your-email@example.com](mailto:your-email@example.com).
+For any inquiries, reach out to [darshil6675@gmail.com](mailto:darshil6675@gmail.com).
 

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { router, Link } from '@inertiajs/react';
+import { useEffect } from 'react';
 import Swal from "sweetalert2";
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -33,8 +34,8 @@ interface Link {
 interface Blog {
     id: number;
     posts: {
-        title:string;
-        post:string;
+        title: string;
+        post: string;
     };
     photo_name: string;
     slug: string;
@@ -50,6 +51,11 @@ export default function PostEdit({ blog }: { blog: Blog }) {
     const [processing, setProcessing] = useState(false);
     const { errors } = usePage().props;
 
+    useEffect(() => {
+        if (blog.photo_name) {
+            setImagepreview(`/storage/${blog.photo_name}`); // Assuming this is a valid URL
+        }
+    }, [blog.photo_name]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

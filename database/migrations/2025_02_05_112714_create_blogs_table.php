@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
-            $table->string('posts');
+            $table->longText('posts');
             $table->string('slug')->unique();
             $table->string('photo_name')->nullable();
             $table->timestamps();

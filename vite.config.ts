@@ -5,15 +5,15 @@ import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-    //   server: {
-    //     host: '0.0.0.0',   // Allows external access
-    //     port: 5173,        // Default Vite port
-    //     strictPort: true,  // Ensures Vite sticks to this port
-    //     hmr: {
-    //       host: '192.168.1.18', // Replace with your actual local IP
-    //     },
-    //     cors: true,
-    //   },
+      server: {
+        host: '0.0.0.0',   // Allows external access
+        port: 5173,        // Default Vite port
+        strictPort: true,  // Ensures Vite sticks to this port
+        hmr: {
+          host: '192.168.1.18', // Replace with your actual local IP
+        },
+        cors: true,
+      },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],

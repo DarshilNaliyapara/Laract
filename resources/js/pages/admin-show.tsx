@@ -21,7 +21,10 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 interface Blog {
     id: number;
-    posts: string;
+    posts: {
+        title:string;
+        post:string;
+    };
     photo_name: string;
     slug: string;
     created_at: number;
@@ -31,8 +34,8 @@ interface Blog {
         name: string;
     }
     liked: boolean;
-    likeCount: number;
-    commentCount: number;
+    likes_count: number;
+    comments_count: number;
     comments:string;
 }
 
@@ -40,17 +43,16 @@ export default function PostShow({ blog }: { blog: Blog }) {
     const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
     const { auth } = usePage<SharedData>().props;
-    const postContent = JSON.parse(blog.posts);
-    const [formattedPost, setFormattedPost] = useState("");
+     const [formattedPost, setFormattedPost] = useState("");
     const imgSrc = `/storage/${blog.photo_name}`;
 
     useEffect(() => {
-        const linkedPost = postContent.post
+        const linkedPost = blog.posts.post
             .replace(/\n/g, "<br>")
             .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" class="text-blue-500 underline" target="_blank" rel="noopener noreferrer">$1</a>');
 
         setFormattedPost(linkedPost);
-    }, [postContent]);
+    }, [blog.posts]);
     const toggleComment = (postId: number) => {
         setCommentingPost(commentingPost === postId ? null : postId);
     };
@@ -83,7 +85,7 @@ export default function PostShow({ blog }: { blog: Blog }) {
 
                             <div className="ml-5">
                                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                                    {postContent.title}
+                                    {blog.posts.title}
                                 </h2>
 
                                 {/* Image with Zoom */}
@@ -114,7 +116,7 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                         onClick={() => toggleComment(blog.id)}
                                     >
                                         <MessageCircle className="w-4 h-4" />
-                                        Comments
+                                        Comments  {blog.comments_count ? <>({blog.comments_count})</> : <></>}
                                     </Button>
                                 </div>
                             </div>
@@ -129,8 +131,8 @@ export default function PostShow({ blog }: { blog: Blog }) {
                     <div className="p-4">
                         <ResponsiveContainer width="100%" height={250}>
                             <BarChart data={[
-                                { name: 'Likes', value: blog.likeCount },
-                                { name: 'Comments', value: blog.commentCount }
+                                { name: 'Likes', value: blog.likes_count },
+                                { name: 'Comments', value: blog.comments_count }
                             ]}>
                                 <XAxis dataKey="name" />
                                 <YAxis />

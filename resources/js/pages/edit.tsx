@@ -32,16 +32,18 @@ interface Link {
 
 interface Blog {
     id: number;
-    posts: string;
+    posts: {
+        title:string;
+        post:string;
+    };
     photo_name: string;
     slug: string;
 }
 
 
 export default function PostEdit({ blog }: { blog: Blog }) {
-    const postContent = JSON.parse(blog.posts);
-    const [title, setTitle] = useState<string>(postContent.title);
-    const [post, setPost] = useState<string>(postContent.post);
+    const [title, setTitle] = useState<string>(blog.posts.title);
+    const [post, setPost] = useState<string>(blog.posts.post);
     const [file, setImage] = useState<File | null>(null);
     const [filepreview, setImagepreview] = useState<string | null>(null);
 
@@ -178,7 +180,7 @@ export default function PostEdit({ blog }: { blog: Blog }) {
 
                     </form>
                 </div>
-                <hr />
+
 
             </div>
 

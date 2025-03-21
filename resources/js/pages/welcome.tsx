@@ -13,11 +13,14 @@ import Comments from '@/components/comment';
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Laract', href: '/home' },
 ];
+
 interface Post {
     id: number;
     user_id: number;
-    title: string;
-    posts: string;
+    posts: {
+        title: string;
+        post: string;
+    };
     photo_name: string;
     created_at: string;
     updated_at: string;
@@ -27,8 +30,10 @@ interface Post {
     };
     slug: string;
     liked: boolean;
-    likeCount: number;
+    likes_count: number;
     comments: string;
+    comments_count: number;
+
 }
 
 interface Link {
@@ -97,7 +102,6 @@ export default function Laract({ posts }: { posts: PostsData }) {
                     <div className="w-full rounded-lg ">
                         {formattedPosts.length > 0 ? (
                             formattedPosts.map((post) => {
-                                const postContent = JSON.parse(post.posts);
                                 return (
                                     <div className="flex flex-col gap-2 p-2">
                                         <Card key={post.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
@@ -139,7 +143,7 @@ export default function Laract({ posts }: { posts: PostsData }) {
 
 
                                                             )}
-                                                            <span className="text-gray-600 dark:text-gray-400">{post.likeCount}</span>
+                                                            <span className="text-gray-600 dark:text-gray-400">{post.likes_count}</span>
                                                         </div>
                                                     </div>
                                                     <small className="ml-2 text-sm text-gray-400 dark:text-gray-500">
@@ -160,7 +164,7 @@ export default function Laract({ posts }: { posts: PostsData }) {
                                                     <div className='ml-5'>
                                                         <a href={route('blogs.show', post.slug)}>
                                                             <h2 className="text-2xl font-bold text-gray-900 dark:text-white underline">
-                                                                {postContent.title}
+                                                                {post.posts.title}
                                                             </h2>
                                                         </a>
 
@@ -182,7 +186,7 @@ export default function Laract({ posts }: { posts: PostsData }) {
                                                         <p
                                                             className="postContent text-base text-gray-700 mt-2 dark:text-gray-300"
                                                             dangerouslySetInnerHTML={{
-                                                                __html: getExcerpt(postContent.post, wordLimit),
+                                                                __html: getExcerpt(post.posts.post, wordLimit),
                                                             }}
 
                                                         ></p>
@@ -195,7 +199,7 @@ export default function Laract({ posts }: { posts: PostsData }) {
                                                                 onClick={() => toggleComment(post.id)}
                                                             >
                                                                 <MessageCircle className="w-4 h-4" />
-                                                                Comment
+                                                                Comment  {post.comments_count ? <>({post.comments_count})</> : <></>}
                                                             </Button>
 
                                                         </div>

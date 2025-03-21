@@ -42,8 +42,10 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface Post {
     id: number;
     user_id: number;
-    title: string;
-    posts: string;
+    posts: {
+        title: string;
+        post:string;
+    };
     photo_name: string;
     created_at: string;
     updated_at: string;
@@ -53,8 +55,8 @@ interface Post {
     };
     slug: string;
     liked: boolean;
-    likeCount: number;
-    comments: string;
+    likes_count: number;
+    comments_count: number;
 }
 
 
@@ -134,14 +136,13 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
         }
     ];
     const rowData = posts.map((post) => {
-        const postContent = JSON.parse(post.posts);
-
+       
         return {
             id: post.id,
-            title: postContent.title,
-            body: postContent.post,
-            likes: post.likeCount,
-            comments: post.comments,
+            title: post.posts.title,
+            body: post.posts.post,
+            likes: post.likes_count,
+            comments: post.comments_count,
             action: post.slug,
 
         };
@@ -179,6 +180,7 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
                         theme={theme}
                     />
                 </div>
+                
             </div>
         </AppLayout>
     );

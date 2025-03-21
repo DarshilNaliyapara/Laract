@@ -140,6 +140,12 @@ export default function Comments({ postId, comments, authUserId }: CommentsProps
                     placeholder="Write a comment..."
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            submitComment();
+                        }
+                    }
+                }
                     className="w-full h-10 px-3 bg-background text-sm border-2 rounded-md shadow-sm focus:ring focus:ring-gray-300 dark:focus:ring-gray-600"
                 />
                 <Button size="sm"  onClick={submitComment} className="px-4 py-2">

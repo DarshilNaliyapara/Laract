@@ -14,7 +14,7 @@ import Comments from '@/components/comment';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Home', href: '/home' },
+    { title: 'Search', href: '/search' },
 ];
 
 interface Post {
@@ -46,18 +46,14 @@ interface Link {
 
 interface PostsData {
     data: Post[];
-    links: Link[];
-    current_page: number;
+
 }
 
 
-export default function Home({ posts }: { posts: PostsData }) {
-    console.log(posts);
+export default function Search({ posts }: { posts: PostsData }) {
+
     const { auth } = usePage<SharedData>().props;
-    const [formattedPost, setFormattedPost] = useState("");
-    const { data, setData } = useForm({
-        page: posts.current_page
-    });
+    const [formattedPost, setFormattedPost] = useState(posts);
 
     const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
@@ -107,7 +103,7 @@ export default function Home({ posts }: { posts: PostsData }) {
         })
     };
 
-    const formattedPosts = Array.isArray(posts.data) ? posts.data : [];
+    const formattedPosts = Array.isArray(posts) ? posts : [];
 
     const wordLimit = 20;
 
@@ -136,11 +132,11 @@ export default function Home({ posts }: { posts: PostsData }) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Home" />
+            <Head title="Search" />
             <div className="flex flex-col gap-4 p-4">
                 {formattedPosts.length > 0 ? (
                     formattedPosts.map((post) => {
-                          return (
+                        return (
                             <Card key={post.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
                                 <CardContent className="p-3">
                                     <div className="flex flex-col">
@@ -276,12 +272,7 @@ export default function Home({ posts }: { posts: PostsData }) {
                 ) : (
                     <p className="text-center text-gray-500 dark:text-gray-400">No posts available</p>
                 )}
-                {formattedPosts.length > 0 &&
-                    <Pagination
-                        links={posts.links}
-                        currentPage={posts.current_page}
-                        setCurrentPage={(page) => setData('page', page)} />
-                }
+
             </div>
         </AppLayout>
     );

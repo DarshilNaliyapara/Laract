@@ -18,25 +18,9 @@ use Illuminate\Support\Facades\Storage;
 class BlogController extends Controller
 {
 
-    public function index(Blog $blog, User $user)
+    public function index()
     {
-
-        if (!auth()->check()) {
-            return redirect(route('home'));
-        }
-        $posts = Auth::user()->blog()->with('user')->latest()->paginate(2);
-        // $posts = Blog::with('user:id,name')->latest()->paginate(perPage: 3);
-        // $comments = Comment::latest()->get();
-        $posts->getCollection()->transform(function ($post) {
-            $post->likeCount = $post->likes()->count();
-            $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
-            $post->comments = $post->comments()->with('user:id,name')->get();
-            return $post;
-        });
-        return Inertia::render('posts', [
-            'posts' => $posts
-        ]);
-
+      //
     }
     public function edit(Blog $blog, User $user)
     {
@@ -46,6 +30,8 @@ class BlogController extends Controller
         if (!Gate::allows('update-post', $blog)) {
             abort(401);
         }
+        $blog->posts = json_decode($blog->posts, true);
+      
         return Inertia::render('edit', [
 
             'blog' => $blog
@@ -70,7 +56,7 @@ class BlogController extends Controller
         $slug = Str::slug($uuid);
         if ($file) {
             $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $request->file('file')->storeAs('files',$filename, 'public');
+            $path = $request->file('file')->storeAs('files', $filename, 'public');
             $blog = $request->user()->blog()->create(['posts' => json_encode($validated), 'slug' => $slug, 'photo_name' => $path]);
         } else {
             $blog = $request->user()->blog()->create(['posts' => json_encode($validated), 'slug' => $slug]);
@@ -121,10 +107,12 @@ class BlogController extends Controller
     public function show(Blog $blog)
     {
         $latest = Blog::where('slug', $blog->slug)
-            ->with('user:id,name')
-            ->firstOrFail(); // Retrieve a single blog post
+            ->with('user:id,name', 'comments.user:id,name')
+            ->withCount(['comments'])
+            ->firstOrFail();
+        $latest->posts = json_decode($latest->posts, true);
         $latest->comments = $latest->comments()->with('user:id,name')->get();
-          
+
         return Inertia::render('show', [
 
             'blog' => $latest
@@ -170,19 +158,20 @@ class BlogController extends Controller
 
         return redirect()->back()->with('success', 'Post liked successfully.');
     }
-    public function adminshow(Blog $blog){
-          $latest = Blog::where('slug', $blog->slug)
-                ->with('user:id,name')
-                ->firstOrFail(); // Retrieve a single blog post
-            $latest->likeCount = $latest->likes()->count();
-            $latest->liked = $latest->likes()->where('user_id', auth()->id())->exists();
-            $latest->commentCount = $latest->comments()->count();
-            $latest->comments = $latest->comments()->with('user:id,name')->get();
-            return Inertia::render('admin-show', [
-    
-                'blog' => $latest
-            ]);
-    
-        
+    public function adminshow(Blog $blog)
+    {
+        $latest = Blog::where('slug', $blog->slug)
+            ->with('user:id,name', 'comments.user:id,name')
+            ->withCount(['likes', 'comments'])
+            ->firstOrFail();
+        $latest->posts = json_decode($latest->posts, true);
+        $latest->comments = $latest->comments()->with('user:id,name')->get();
+        return Inertia::render('admin-show', [
+
+            'blog' => $latest
+        ]);
+
+
     }
+   
 }

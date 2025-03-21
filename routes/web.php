@@ -4,6 +4,7 @@ use App\Models\Blog;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Comment;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
@@ -14,15 +15,16 @@ Route::get('/', function () {
     if ($authuser) {
         return redirect(route('home'));
     }
-    $posts = Blog::with('user:id,name')->orderBy('created_at', 'desc')
-        ->orderBy('updated_at', 'desc')->paginate(perPage: 3);
-    $comments = Comment::latest()->get();
-    $posts->getCollection()->transform(function ($post) {
-        $post->likeCount = $post->likes()->count();
-        $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
-        $post->comments = $post->comments()->with('user:id,name')->get();
-        return $post;
-    });
+    $posts = Blog::with(['user:id,name', 'comments.user:id,name'])
+        ->withCount(['likes', 'comments'])
+        ->orderBy('updated_at', 'desc')
+        ->paginate(perPage: 5)
+        ->through(function ($post) {
+            $post->posts = json_decode($post->posts, true);
+            $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
+            return $post;
+        });
+
 
     return Inertia::render('welcome', [
         'posts' => $posts
@@ -31,18 +33,21 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/home', function (User $user) {
+    Route::get('/home', function (User $user, Request $request) {
         $authuser = Auth::user();
         if ($authuser) {
-            $posts = Blog::with('user:id,name')
-                ->orderBy('created_at', 'desc')->paginate(perPage: 5);
-            $comments = Comment::latest()->get();
-            $posts->getCollection()->transform(function ($post) {
-                $post->likeCount = $post->likes()->count();
-                $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
-                $post->comments = $post->comments()->with('user:id,name')->get();
-                return $post;
-            });
+            $val = $request->input('search', ''); 
+            $searchQuery = '%' . $val . '%';
+            $posts = Blog::where('posts', 'LIKE', $searchQuery)
+                ->with(['user:id,name', 'comments.user:id,name'])
+                ->withCount(['likes', 'comments'])
+                ->orderBy('created_at', 'desc')
+                ->paginate(perPage: 5)
+                ->through(function ($post) {
+                    $post->posts = json_decode($post->posts, true);
+                    $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
+                    return $post;
+                });
 
             return Inertia::render('home', [
                 'posts' => $posts
@@ -57,15 +62,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if (!auth()->check()) {
             return redirect(route('home'));
         }
-        $posts = Auth::user()->blog()->with('user')
-            ->orderBy('updated_at', 'desc')->get();
-
-        $posts = $posts->map(function ($post) {
-            $post->likeCount = $post->likes()->count();
-            $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
-            $post->comments = $post->comments()->count();
-            return $post;
-        });
+        $posts = Auth::user()->blog()
+            ->with(['user:id,name', 'comments.user:id,name'])
+            ->withCount(['likes', 'comments'])
+            ->orderBy('updated_at', 'desc')
+            ->get()
+            ->map(function ($post) {
+                $post->posts = json_decode($post->posts, true);
+                return $post;
+            });
 
 
         return Inertia::render('dashboard', ['posts' => $posts]);
@@ -76,18 +81,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if (!auth()->check()) {
             return redirect(route('home'));
         }
-        $posts = Auth::user()->blog()->with('user')->orderBy('updated_at', 'desc')->paginate(2);
-        $posts->getCollection()->transform(function ($post) {
-            $post->likeCount = $post->likes()->count();
-            $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
-            $post->comments = $post->comments()->with('user:id,name')->get();
-            return $post;
-        });
+        $posts = Auth::user()->blog()
+            ->with(['user:id,name', 'comments.user:id,name'])
+            ->withCount(['likes', 'comments'])
+            ->orderBy('updated_at', 'desc')
+            ->paginate(2)
+            ->through(function ($post) {
+                $post->posts = json_decode($post->posts, true);
+                $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
+                return $post;
+            });
+
         return Inertia::render('posts', [
             'posts' => $posts
         ]);
     })->name('posts');
 });
+
 Route::get('/blogs/admin/{blog}', [BlogController::class, 'adminshow'])->middleware(['auth', 'verified'])->name('blogs.adminshow');
 Route::post('/blogs/{blog}/dislike', [BlogController::class, 'dislike'])->middleware(['auth', 'verified'])->name('blogs.dislike');
 Route::post('/blogs/{blog}/like', [BlogController::class, 'like'])->middleware(['auth', 'verified'])->name('blogs.like');

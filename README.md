@@ -11,6 +11,8 @@
 - 📝 Create, edit, and delete blog posts
 - 💬 Commenting And Like system
 - 🔐 User authentication with Laravel Breeze & Inertia.js
+- 🔎 Global search functionality
+- ⚠️ Alerts and popups using SweetAlert2
 - 🌙 Dark mode support
 - 🏗️ Admin panel for managing blog posts
 
@@ -70,8 +72,42 @@ npm run dev
 ```
 
 ## 📷 Screenshots
-![Homepage Screenshot](docs/screenshot-home.png)
-![Commenting System](docs/screenshot-comments.png)
+### Homepage:
+![Homepage Screenshot](Screenshots/Home.png)
+
+### Guest View:
+![Commenting System](Screenshots/Guest.png)
+
+### Dashboard:
+![Commenting System](Screenshots/Dashboard.png)
+
+### Blog Post View:
+![Commenting System](Screenshots/Post.png)
+
+### Edit Post (With Image Preview):
+![Commenting System](Screenshots/Edit(with_image).png)
+
+### Blog Comment Section:
+![Commenting System](Screenshots/Blog_Comment.png)
+
+### Blog Search:
+![Commenting System](Screenshots/Global_Search.png)
+
+### SweetAlert2:
+![Commenting System](Screenshots/Post_alert.png)
+
+### Login Page:
+![Commenting System](Screenshots/Login.png)
+
+### Register Page:
+![Commenting System](Screenshots/Register.png)
+
+### Email for Verification:
+![Commenting System](Screenshots/Email_for_Verification.png)
+
+### Email Verification Mail Page:
+![Commenting System](Screenshots/Email_Verify.png)
+
 
 ## 📜 License
 This project is licensed under the [MIT License](LICENSE).
@@ -80,5 +116,5 @@ This project is licensed under the [MIT License](LICENSE).
 Pull requests are welcome! Please follow the standard contribution guidelines.
 
 ## 📧 Contact
-For any inquiries, reach out to [your-email@example.com](mailto:your-email@example.com).
+For any inquiries, reach out to [darshil6675@gmail.com](mailto:darshil6675@gmail.com).
 

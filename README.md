@@ -90,6 +90,12 @@ npm run dev
 ### Blog Comment Section:
 ![Commenting System](Screenshots/Blog_Comment.png)
 
+### Blog Search:
+![Commenting System](Screenshots/Global_Search.png)
+
+### SweetAlert2:
+![Commenting System](Screenshots/Post_alert.png)
+
 ### Login Page:
 ![Commenting System](Screenshots/Login.png)
 
@@ -102,11 +108,6 @@ npm run dev
 ### Email Verification Mail Page:
 ![Commenting System](Screenshots/Email_Verify.png)
 
-### Blog Search:
-![Commenting System](Screenshots/Global_Search.png)
-
-### SweetAlert2:
-![Commenting System](Screenshots/Post_alert.png)
 
 ## 📜 License
 This project is licensed under the [MIT License](LICENSE).

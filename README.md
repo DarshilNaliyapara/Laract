@@ -25,7 +25,7 @@ Ensure you have the following installed:
 
 ### 1️⃣ Clone the Repository
 ```sh
-git clone https://github.com/DarshilNaliyapara/Laract.git
+git clone [https://github.com/DarshilNaliyapara/Laract.git](https://github.com/DarshilNaliyapara/Laract.git)
 cd Laract
 ```
 

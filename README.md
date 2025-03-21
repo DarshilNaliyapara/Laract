@@ -11,6 +11,8 @@
 - 📝 Create, edit, and delete blog posts
 - 💬 Commenting And Like system
 - 🔐 User authentication with Laravel Breeze & Inertia.js
+- 🔎 Global search functionality
+- ⚠️ Alerts and popups using SweetAlert2
 - 🌙 Dark mode support
 - 🏗️ Admin panel for managing blog posts
 
@@ -99,6 +101,12 @@ npm run dev
 
 ### Email Verification Mail Page:
 ![Commenting System](Screenshots/Email_Verify.png)
+
+### Blog Search:
+![Commenting System](Screenshots/Global_Search.png)
+
+### SweetAlert2:
+![Commenting System](Screenshots/Post_alert.png)
 
 ## 📜 License
 This project is licensed under the [MIT License](LICENSE).

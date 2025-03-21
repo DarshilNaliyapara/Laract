@@ -70,15 +70,34 @@ npm run dev
 ```
 
 ## 📷 Screenshots
+### Homepage
 ![Homepage Screenshot](Screenshots/Home.png)
+
+### Guest View
 ![Commenting System](Screenshots/Guest.png)
+
+### Dashboard
 ![Commenting System](Screenshots/Dashboard.png)
+
+### Blog Post View
 ![Commenting System](Screenshots/Post.png)
+
+### Edit Post (With Image Preview)
 ![Commenting System](Screenshots/Edit(with_image).png)
+
+### Blog Comment Section
 ![Commenting System](Screenshots/Blog_Comment.png)
+
+### Login Page
 ![Commenting System](Screenshots/Login.png)
+
+### Register Page
 ![Commenting System](Screenshots/Register.png)
+
+### Email for Verification
 ![Commenting System](Screenshots/Email_for_Verification.png)
+
+### Email Verification Mail Page
 ![Commenting System](Screenshots/Email_Verify.png)
 
 ## 📜 License

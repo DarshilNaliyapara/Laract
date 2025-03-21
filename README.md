@@ -70,8 +70,8 @@ npm run dev
 ```
 
 ## 📷 Screenshots
-![Homepage Screenshot](docs/screenshot-home.png)
-![Commenting System](docs/screenshot-comments.png)
+![Homepage Screenshot](Screenshots/Home.png)
+![Commenting System](Screenshots/Blog_Comment.png)
 
 ## 📜 License
 This project is licensed under the [MIT License](LICENSE).

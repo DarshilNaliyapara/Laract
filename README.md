@@ -9,7 +9,7 @@
 
 ## ✨ Features
 - 📝 Create, edit, and delete blog posts
-- 💬 Real-time commenting with WebSockets
+- 💬 Commenting And Like system
 - 🔐 User authentication with Laravel Breeze & Inertia.js
 - 🌙 Dark mode support
 - 🏗️ Admin panel for managing blog posts

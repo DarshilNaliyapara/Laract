@@ -27,7 +27,7 @@ interface Blog {
     posts: {
         title: string;
         post: string;
-        avatar:string;
+        avatar: string;
     };
     photo_name: string;
     slug: string;
@@ -36,7 +36,7 @@ interface Blog {
     user: {
         id: number;
         name: string;
-        avatar:string;
+        avatar: string;
     }
     liked: boolean;
     likeCount: number;
@@ -68,9 +68,9 @@ export default function PostShow({ blog }: { blog: Blog }) {
             <Head title="Posts" />
 
             <div className="flex h-auto flex-1 flex-col gap-4 rounded-xl p-4">
-                <Card key={blog.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
-                    <CardContent className="p-3">
-                        <div className="flex flex-col">
+                <div key={blog.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
+                    <div className="p-4">
+                        <div className="flex flex-col m-1">
                             <div className="flex items-center space-x-2">
                                 <Avatar className="h-8 w-8 overflow-hidden rounded-full">
                                     <AvatarImage src={`/storage/${blog.user.avatar}`} alt={blog.user.name} />
@@ -129,8 +129,8 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                 <Comments postId={blog.id} comments={Array.isArray(blog.comments) ? blog.comments : []} authUserId={auth.user.id} />
                             )}
                         </div>
-                    </CardContent>
-                </Card>
+                    </div>
+                </div>
             </div>
         </AppLayout >
     );

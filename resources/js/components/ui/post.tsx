@@ -223,7 +223,7 @@ export default function Post({ post }: PostProps) {
 
                             {auth.user?.id === post.user.id && (
                                 <>
-                                    <Link href={`/blogs/edit/${post.slug}`}>
+                                    <Link href={`/blogs/${post.slug}/edit`}>
                                         <Button variant="outline" size="sm" className="flex items-center gap-2 text-blue-600 border-blue-600">
                                             <Pencil className="w-4 h-4" />
                                             Edit

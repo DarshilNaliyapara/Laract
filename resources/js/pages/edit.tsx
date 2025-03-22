@@ -47,7 +47,6 @@ export default function PostEdit({ blog }: { blog: Blog }) {
     const [post, setPost] = useState<string>(blog.posts.post);
     const [file, setImage] = useState<File | null>(null);
     const [filepreview, setImagepreview] = useState<string | null>(null);
-
     const [processing, setProcessing] = useState(false);
     const { errors } = usePage().props;
 

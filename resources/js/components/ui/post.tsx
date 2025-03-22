@@ -113,10 +113,9 @@ export default function Post({ post }: PostProps) {
 
     return (
         <div key={post.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
-            <div className="p-3">
-                <div className="flex flex-col">
-                    {/* Header */}
-                    <div className="flex justify-between m-2">
+            <div className="p-4">
+                <div className="flex flex-col m-1">
+                    <div className="flex justify-between">
                         <div className="flex items-center space-x-2">
                             <Avatar className="h-8 w-8 overflow-hidden rounded-full">
                                 <AvatarImage src={`/storage/${post.user.avatar}`} alt={post.user.name} />
@@ -127,6 +126,11 @@ export default function Post({ post }: PostProps) {
                             <span className="text-sm text-gray-600 dark:text-gray-400">{post.user.name}</span>
                             <small className="text-sm text-gray-400 dark:text-gray-500">
                                 {dayjs(post.created_at).fromNow()}
+
+                                {post.created_at !== post.updated_at && (
+                                    <small className="text-sm text-gray-400 ml-2 dark:text-gray-500">edited</small>
+                                )}
+
                             </small>
                         </div>
 
@@ -163,45 +167,27 @@ export default function Post({ post }: PostProps) {
                         </div>
                     </div>
 
-                    {/* Edited Tag */}
-                    {post.created_at !== post.updated_at && (
-                        <small className="text-sm text-gray-400 dark:text-gray-500"> &middot; edited</small>
-                    )}
-
-                    {/* Post Content */}
-                    <div className="ml-5">
+                    <div className="ml-5 ">
                         <Link href={`/blogs/${post.slug}`}>
-                            <h2 className="text-2xl font-bold text-gray-900 dark:text-white underline">
+                            <h2 className="text-2xl mt-1 font-bold text-gray-900 dark:text-white underline">
                                 {post.posts.title}
                             </h2>
                         </Link>
 
-                        {/* Post Image */}
                         {post.photo_name && (
                             <div className="flex flex-wrap gap-4 mt-3">
                                 <div className="relative md:w-1/2 lg:w-1/3 flex items-start">
                                     <div className="flex overflow-hidden rounded-lg">
-                                        {route().current('blogs.show') ? (
-                                        <Zoom>
-                                            <img
-                                                className="cursor-pointer rounded-lg shadow-lg  max-h-96 object-contain"
-                                                src={`/storage/${post.photo_name}`}
-                                                alt="Blog Image"
-
-                                            />
-                                        </Zoom>
-                                        ) : (<img
+                                        <img
                                             src={`/storage/${post.photo_name}`}
                                             alt="Blog Preview"
                                             className="cursor-pointer rounded-lg shadow-lg max-h-96 object-contain"
-                                        />)}
-
+                                        />
                                     </div>
                                 </div>
                             </div>
                         )}
 
-                        {/* Post Excerpt */}
                         <p
                             className="postContent text-base text-gray-700 mt-2 dark:text-gray-300"
                             dangerouslySetInnerHTML={{
@@ -209,7 +195,6 @@ export default function Post({ post }: PostProps) {
                             }}
                         ></p>
 
-                        {/* Actions (Comments, Edit, Delete) */}
                         <div className="mt-4 flex gap-3">
                             <Button
                                 variant="outline"
@@ -244,7 +229,6 @@ export default function Post({ post }: PostProps) {
                         </div>
                     </div>
 
-                    {/* Comments Section */}
                     {commentingPost === post.id && (
                         <Comments postId={post.id} comments={Array.isArray(post.comments) ? post.comments : []} authUserId={auth.user?.id} />
                     )}

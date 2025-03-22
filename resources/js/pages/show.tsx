@@ -81,30 +81,30 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                 <span className="text-sm text-gray-600 dark:text-gray-400">{blog.user.name}</span>
                                 <small className="text-sm text-gray-400 dark:text-gray-500">
                                     {dayjs(blog.created_at).fromNow()}
+                                    {blog.created_at !== blog.updated_at && (
+                                        <small className="text-sm text-gray-400 ml-2 dark:text-gray-500">edited</small>
+                                    )}
                                 </small>
                             </div>
 
-                            {blog.created_at !== blog.updated_at && (
-                                <small className="text-sm text-gray-400 dark:text-gray-500"> &middot; edited</small>
-                            )}
-
-                            <div className="ml-5">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            <div className="ml-5 ">
+                                <h2 className="text-2xl mt-1 font-bold text-gray-900 dark:text-white">
                                     {blog.posts.title}
                                 </h2>
 
                                 {/* Image with Zoom */}
                                 {blog.photo_name && (
                                     <div className="flex flex-wrap gap-4 mt-3">
-                                        <div className="relative w-full md:w-1/2 lg:w-1/3">
-                                            <Zoom >
-                                                <img
-                                                    className="cursor-pointer rounded-lg shadow object-cover w-full h-full"
-                                                    src={imgSrc}
-                                                    alt="Blog Image"
-
-                                                />
-                                            </Zoom>
+                                        <div className="relative md:w-1/2 lg:w-1/3 flex items-start">
+                                            <div className="flex overflow-hidden rounded-lg">
+                                                <Zoom>
+                                                    <img
+                                                        className="cursor-pointer rounded-lg shadow-lg  max-h-96 object-contain"
+                                                        src={`/storage/${blog.photo_name}`}
+                                                        alt="Blog Image"
+                                                    />
+                                                </Zoom>
+                                            </div>
                                         </div>
                                     </div>
                                 )}

@@ -85,16 +85,16 @@ npm run dev
 ![Commenting System](Screenshots/Post.png)
 
 ### Edit Post (With Image Preview):
-![Commenting System](Screenshots/Edit(with_image).png)
+![Commenting System](Screenshots/Edit_Post.png)
 
 ### Blog Comment Section:
 ![Commenting System](Screenshots/Blog_Comment.png)
 
 ### Blog Search:
-![Commenting System](Screenshots/Global_Search.png)
+![Commenting System](Screenshots/Blog_search.png)
 
 ### SweetAlert2:
-![Commenting System](Screenshots/Post_alert.png)
+![Commenting System](Screenshots/Post_create_success.png)
 
 ### Login Page:
 ![Commenting System](Screenshots/Login.png)

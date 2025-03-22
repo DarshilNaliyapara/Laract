@@ -170,17 +170,18 @@ export default function Laract({ posts }: { posts: PostsData }) {
 
                                                         {/* Post Image */}
                                                         {post.photo_name && (
-                                                            <div className="flex flex-wrap gap-4 mt-3">
-                                                                <div className="relative w-full md:w-1/2 lg:w-1/3">
-
-                                                                    <img
-                                                                        src={`/storage/${post.photo_name}`}
-                                                                        alt="Blog Preview"
-                                                                        className="cursor-pointer rounded-lg shadow-lg object-cover w-full h-full"
-                                                                    />
-                                                                </div>
+                                                        <div className="flex flex-wrap gap-4 mt-3">
+                                                            <div className="relative  md:w-1/2 lg:w-1/3 flex items-start">
+                                                              <div className=" flex overflow-hidden rounded-lg">
+                                                                <img
+                                                                  src={`/storage/${post.photo_name}`}
+                                                                  alt="Blog Preview"
+                                                                  className="cursor-pointer rounded-lg shadow-lg  max-h-96 object-contain"
+                                                                />
+                                                              </div>
                                                             </div>
-                                                        )}
+                                                          </div>
+                                                      )}
 
 
                                                         <p

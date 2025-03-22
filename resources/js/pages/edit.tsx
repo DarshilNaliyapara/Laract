@@ -154,16 +154,19 @@ export default function PostEdit({ blog }: { blog: Blog }) {
                                 />
                                 <InputError message={errors.file} />
                             </div>
-                            {filepreview && <div className="flex flex-wrap gap-4 mt-3">
-                                <div className="relative w-full md:w-1/2 lg:w-1/3">
-
-                                    <img
-                                        src={filepreview}
-                                        alt="Blog Preview"
-                                        className="cursor-pointer rounded-lg shadow-lg object-cover w-full h-full"
-                                    />
+                            {filepreview &&
+                                <div className="flex flex-wrap gap-4 mt-3">
+                                    <div className="relative  md:w-1/2 lg:w-1/3 flex items-start">
+                                        <div className="flex overflow-hidden rounded-lg">
+                                            <img
+                                                src={filepreview}
+                                                alt="Blog Preview"
+                                                className="cursor-pointer rounded-lg shadow-lg  max-h-96 object-contain"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>}
+                            }
                             <div className="flex items-center gap-4">
                                 <Button type="submit" className="mt-2 w-20 cursor-pointer" disabled={processing}>
                                     {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}

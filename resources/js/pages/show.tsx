@@ -21,8 +21,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface Blog {
     id: number;
     posts: {
-        title:string;
-        post:string;
+        title: string;
+        post: string;
     };
     photo_name: string;
     slug: string;
@@ -35,13 +35,13 @@ interface Blog {
     liked: boolean;
     likeCount: number;
     comments: string;
-    comments_count:number;
+    comments_count: number;
 
 }
 
 export default function PostShow({ blog }: { blog: Blog }) {
-   
-     const [formattedPost, setFormattedPost] = useState("");
+
+    const [formattedPost, setFormattedPost] = useState("");
     const imgSrc = `/storage/${blog.photo_name}`;
     const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
@@ -91,17 +91,20 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                 {/* Image with Zoom */}
                                 {blog.photo_name && (
                                     <div className="flex flex-wrap gap-4 mt-3">
-                                        <div className="relative w-full md:w-1/2 lg:w-1/3">
-                                            <Zoom >
-                                                <img
-                                                    className="cursor-pointer rounded-lg shadow object-cover w-full h-full"
-                                                    src={imgSrc}
-                                                    alt="Blog Image"
+                                        <div className="relative  md:w-1/2 lg:w-1/3 flex items-start">
+                                            <div className=" flex overflow-hidden rounded-lg">
+                                                <Zoom >
+                                                    <img
+                                                        className="cursor-pointer rounded-lg shadow-lg  max-h-96 object-contain"
+                                                        src={imgSrc}
+                                                        alt="Blog Image"
 
-                                                />
-                                            </Zoom>
+                                                    />
+                                                </Zoom>
+                                            </div>
                                         </div>
                                     </div>
+
                                 )}
 
                                 <p

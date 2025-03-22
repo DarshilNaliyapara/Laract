@@ -91,7 +91,7 @@ npm run dev
 ![Commenting System](Screenshots/Blog_Comment.png)
 
 ### Blog Search:
-![Commenting System](Screenshots/Blog_Search.png)
+![Commenting System](Screenshots/Blog_search.png)
 
 ### SweetAlert2:
 ![Commenting System](Screenshots/Post_create_success.png)

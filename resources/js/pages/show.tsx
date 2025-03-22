@@ -87,7 +87,7 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                 </small>
                             </div>
 
-                            <div className="ml-5 ">
+                            <div className="ml-10">
                                 <h2 className="text-2xl mt-1 font-bold text-gray-900 dark:text-white">
                                     {blog.posts.title}
                                 </h2>

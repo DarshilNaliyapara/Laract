@@ -101,7 +101,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
     })->name('posts');
 });
-
+Route::get('/guest/{blog}', [BlogController::class, 'guestshow'])->name('blogs.guestshow');
 Route::get('/blogs/admin/{blog}', [BlogController::class, 'adminshow'])->middleware(['auth', 'verified'])->name('blogs.adminshow');
 Route::post('/blogs/{blog}/dislike', [BlogController::class, 'dislike'])->middleware(['auth', 'verified'])->name('blogs.dislike');
 Route::post('/blogs/{blog}/like', [BlogController::class, 'like'])->middleware(['auth', 'verified'])->name('blogs.like');

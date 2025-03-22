@@ -82,7 +82,7 @@ export default function Laract({ posts }: { posts: PostsData }) {
                         <Link href={route('register')} className="px-4 py-2 text-sm border rounded dark:border-[#3E3E3A] text-[#1b1b18] dark:text-[#EDEDEC] hover:border-[#1915014a] dark:hover:border-[#62605b]">Register</Link>
                     </div>
                 </header>
-                <main className="flex-grow flex justify-center items-center p-6">
+                <main className="flex-grow flex p-6">
                     <div className="w-full rounded-lg ">
                         {formattedPosts.length > 0 ? (
                             formattedPosts.map((post) => {
@@ -95,17 +95,18 @@ export default function Laract({ posts }: { posts: PostsData }) {
                         ) : (
                             <p className="text-center text-gray-500 dark:text-gray-400">No posts available</p>
                         )}
+                        <div className="mt-2">
+                            {formattedPosts.length > 0 && (
+                                <Pagination
+                                    links={posts.links}
+                                    currentPage={posts.current_page}
+                                    setCurrentPage={(page) => setData('page', page)}
 
+                                />
+                            )}
+                        </div>
                     </div>
                 </main>
-                {formattedPosts.length > 0 && (
-                    <Pagination
-                        links={posts.links}
-                        currentPage={posts.current_page}
-                        setCurrentPage={(page) => setData('page', page)}
-
-                    />
-                )}
             </div>
         </>
 

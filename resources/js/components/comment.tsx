@@ -92,7 +92,7 @@ export default function Comments({ postId, comments, authUserId }: CommentsProps
     };
 
     return (
-        <div className="ml-5 mt-4 p-4 border rounded-lg dark:bg-black bg-white shadow-md">
+        <div className="ml-10 mt-4 p-4 border rounded-lg dark:bg-black bg-white shadow-md">
             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Comments</h3>
 
             <div className="max-h-61 overflow-y-auto space-y-3 pr-2">

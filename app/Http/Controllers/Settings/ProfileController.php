@@ -70,6 +70,25 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
+        $images = $user->blog;
+        
+        foreach ($images as $image) {
+            if ($image->photo_name) {
+                $path = $image->photo_name; 
+                if (Storage::disk('public')->exists($path)) {
+                    Storage::disk('public')->delete($path); 
+                }
+            }
+        }
+
+
+        if ($user->avatar) {
+            $path = $user->avatar; 
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path); 
+            }
+        }
+
         Auth::logout();
 
         $user->delete();

@@ -51,10 +51,10 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     };
 
     const submit: FormEventHandler = async (e) => {
-        setProcessing(true); // Start processing state
+        setProcessing(true);
 
         const formData = new FormData();
-        formData.append('_method', 'patch'); // Inertia uses _method for PUT requests
+        formData.append('_method', 'patch'); 
         formData.append('name', name);
         formData.append('email', email);
 
@@ -65,14 +65,9 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
             onFinish: () => {
                 setProcessing(false);
                 setRecentlySuccessful(true);
-                setTimeout(() => setRecentlySuccessful(false), 3000); // Reset after 3 seconds
+                setTimeout(() => setRecentlySuccessful(false), 3000);
             },
         });
-
-
-        // patch(route('profile.update'), {
-        //     preserveScroll: true,
-        // });
     };
 
     return (
@@ -140,7 +135,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                         )}
 
                         <div className="grid gap-2">
-                            <Label htmlFor="file">File</Label>
+                            <Label htmlFor="file">Avatar</Label>
                             <input
                                 id="file"
                                 type="file"

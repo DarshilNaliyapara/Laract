@@ -81,16 +81,17 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                     <span className="text-sm text-gray-600 dark:text-gray-400">{blog.user.name}</span>
                                     <small className="text-sm text-gray-400 dark:text-gray-500">
                                         {dayjs(blog.created_at).fromNow()}
+                                        {blog.created_at !== blog.updated_at && (
+                                            <small className="text-sm text-gray-400 dark:text-gray-500 ml-2">edited</small>
+                                        )}
                                     </small>
                                 </div>
                             </div>
 
 
-                            {blog.created_at !== blog.updated_at && (
-                                <small className="text-sm text-gray-400 dark:text-gray-500"> &middot; edited</small>
-                            )}
 
-                            <div className="ml-5">
+
+                            <div className="ml-10">
                                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                                     {blog.posts.title}
                                 </h2>

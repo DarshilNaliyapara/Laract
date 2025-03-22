@@ -21,7 +21,7 @@ const Pagination: React.FC<PaginationProps> = ({ links, currentPage, setCurrentP
         router.get(url);
     }
     return (
-        <nav className="flex justify-center  mb-6">
+        <nav className="flex justify-center mb-6">
             {links.map(link => (
                 <Link
                 key={link.label}

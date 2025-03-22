@@ -20,7 +20,7 @@ class BlogController extends Controller
 
     public function index()
     {
-      //
+        //
     }
     public function edit(Blog $blog, User $user)
     {
@@ -29,9 +29,10 @@ class BlogController extends Controller
         }
         if (!Gate::allows('update-post', $blog)) {
             abort(401);
+            // return redirect(route('home'));
         }
         $blog->posts = json_decode($blog->posts, true);
-      
+
         return Inertia::render('edit', [
 
             'blog' => $blog
@@ -45,7 +46,7 @@ class BlogController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|min:5|max:30|string',
-            'post' => 'required|min:15|max:1000|string|regex:/^[^<>]*$/',
+            'post' => 'required|min:15|max:5000|string|regex:/^[^<>]*$/',
             'file' => 'nullable|mimes:jpeg,jpg,png|max:5000',
         ]);
 
@@ -73,7 +74,7 @@ class BlogController extends Controller
         $blogdelete = Blog::where('slug', $blog->slug)->firstOrFail(); // Retrieve a single blog post
         $validated = $request->validate([
             'title' => 'required|min:5|max:30|string',
-            'post' => 'required|min:15|max:1000|string|regex:/^[^<>]*$/',
+            'post' => 'required|min:15|max:5000|string|regex:/^[^<>]*$/',
             'file' => 'nullable|mimes:jpeg,jpg,png|max:5000',
         ]);
         $uid = Str::random(3) . rand(10, 99);
@@ -116,15 +117,25 @@ class BlogController extends Controller
         ]);
 
     }
+    public function guestshow(Blog $blog)
+    {
+        $latest = Blog::where('slug', $blog->slug)
+            ->with('user:id,name,avatar', 'comments.user:id,name,avatar')
+            ->withCount(['comments'])
+            ->firstOrFail();
+        $latest->posts = json_decode($latest->posts, true);
+        $latest->comments = $latest->comments()->with('user:id,name')->get();
+
+        return Inertia::render('guest-show', [
+
+            'blog' => $latest
+        ]);
+
+    }
     public function destroy(Blog $blog)
     {
-
-
         if ($blog->photo_name) {
             $path = "{$blog->photo_name}"; // Ensure correct path
-
-            Log::info("Checking path: " . $path);
-            Log::info("File exists? => " . (Storage::disk('public')->exists($path) ? 'true' : 'false'));
 
             if (Storage::disk('public')->exists($path)) {
                 Storage::disk('public')->delete($path); // Delete file
@@ -170,5 +181,5 @@ class BlogController extends Controller
 
 
     }
-   
+
 }

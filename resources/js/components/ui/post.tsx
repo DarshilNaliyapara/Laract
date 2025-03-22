@@ -113,7 +113,7 @@ export default function Post({ post }: PostProps) {
 
     return (
         <div key={post.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
-            <div className="p-4">
+            <div className="p-3">
                 <div className="flex flex-col m-1">
                     <div className="flex justify-between">
                         <div className="flex items-center space-x-2">
@@ -167,8 +167,9 @@ export default function Post({ post }: PostProps) {
                         </div>
                     </div>
 
-                    <div className="ml-5 ">
-                        <Link href={`/blogs/${post.slug}`}>
+                    <div className="ml-10">
+                        <Link href={route().current('welcome') ? `/guest/${post.slug}` : `/blogs/${post.slug}`}>
+
                             <h2 className="text-2xl mt-1 font-bold text-gray-900 dark:text-white underline">
                                 {post.posts.title}
                             </h2>

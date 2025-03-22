@@ -44,7 +44,9 @@ class ProfileController extends Controller
         if ($request->hasFile('avatar')) {
             // Delete the old avatar if it exists
             if ($user->avatar) {
-                Storage::delete($user->avatar);
+                if (Storage::disk('public')->exists($user->avatar)) {
+                    Storage::disk('public')->delete($user->avatar); // Delete file
+                }
             }
 
             $filename = time() . '_' . $request->file('avatar')->getClientOriginalName();

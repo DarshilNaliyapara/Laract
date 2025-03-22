@@ -85,9 +85,6 @@ class BlogController extends Controller
             if ($blogdelete->photo_name) {
                 $path = "{$blogdelete->photo_name}"; // Ensure correct path
 
-                Log::info("Checking path: " . $path);
-                Log::info("File exists? => " . (Storage::disk('public')->exists($path) ? 'true' : 'false'));
-
                 if (Storage::disk('public')->exists($path)) {
                     Storage::disk('public')->delete($path); // Delete file
                 }
@@ -107,7 +104,7 @@ class BlogController extends Controller
     public function show(Blog $blog)
     {
         $latest = Blog::where('slug', $blog->slug)
-            ->with('user:id,name', 'comments.user:id,name')
+            ->with('user:id,name,avatar', 'comments.user:id,name,avatar')
             ->withCount(['comments'])
             ->firstOrFail();
         $latest->posts = json_decode($latest->posts, true);
@@ -161,7 +158,7 @@ class BlogController extends Controller
     public function adminshow(Blog $blog)
     {
         $latest = Blog::where('slug', $blog->slug)
-            ->with('user:id,name', 'comments.user:id,name')
+            ->with('user:id,name,avatar', 'comments.user:id,name,avatar')
             ->withCount(['likes', 'comments'])
             ->firstOrFail();
         $latest->posts = json_decode($latest->posts, true);

@@ -5,13 +5,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Pencil, Trash2, MessageCircle } from "lucide-react";
 import { useEffect, useState } from 'react';
 import { router } from '@inertiajs/react';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { Button } from '@/components/ui/button';
 import { type SharedData } from '@/types';
 import Comments from '@/components/comment';
 import Zoom from 'react-medium-image-zoom';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import 'react-medium-image-zoom/dist/styles.css';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 
+
+dayjs.extend(relativeTime);
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Post Show',
@@ -32,6 +37,7 @@ interface Blog {
     user: {
         id: number;
         name: string;
+        avatar:string;
     }
     liked: boolean;
     likes_count: number;
@@ -66,18 +72,20 @@ export default function PostShow({ blog }: { blog: Blog }) {
                     <CardContent className="p-3">
                         <div className="flex flex-col">
                             <div className="flex justify-between">
-                                <span className="text-sm text-gray-600 dark:text-gray-400">{blog.user.name}</span>
+                                <div className="flex items-center space-x-2">
+                                    <Avatar className="h-8 w-8 overflow-hidden rounded-full">
+                                        <AvatarImage src={`/storage/${blog.user.avatar}`} alt={blog.user.name} />
+                                        <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                            {blog.user.name.charAt(0).toUpperCase()}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <span className="text-sm text-gray-600 dark:text-gray-400">{blog.user.name}</span>
+                                    <small className="text-sm text-gray-400 dark:text-gray-500">
+                                        {dayjs(blog.created_at).fromNow()}
+                                    </small>
+                                </div>
                             </div>
-                            <small className="ml-2 text-sm text-gray-400 dark:text-gray-500">
-                                {new Date(blog.created_at).toLocaleString('en-US', {
-                                    day: 'numeric',
-                                    month: 'short',
-                                    year: 'numeric',
-                                    hour: 'numeric',
-                                    minute: 'numeric',
-                                    hour12: true,
-                                })}
-                            </small>
+                           
 
                             {blog.created_at !== blog.updated_at && (
                                 <small className="text-sm text-gray-400 dark:text-gray-500"> &middot; edited</small>
@@ -91,20 +99,17 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                 {/* Image with Zoom */}
                                 {blog.photo_name && (
                                     <div className="flex flex-wrap gap-4 mt-3">
-                                        <div className="relative  md:w-1/2 lg:w-1/3 flex items-start">
-                                            <div className="flex overflow-hidden rounded-lg">
-                                                <Zoom >
-                                                    <img
-                                                        className="cursor-pointer rounded-lg shadow-lg max-h-96 object-contain"
-                                                        src={imgSrc}
-                                                        alt="Blog Image"
+                                        <div className="relative w-full md:w-1/2 lg:w-1/3">
+                                            <Zoom >
+                                                <img
+                                                    className="cursor-pointer rounded-lg shadow object-cover w-full h-full"
+                                                    src={imgSrc}
+                                                    alt="Blog Image"
 
-                                                    />
-                                                </Zoom>
-                                            </div>
+                                                />
+                                            </Zoom>
                                         </div>
                                     </div>
-
                                 )}
 
                                 <p

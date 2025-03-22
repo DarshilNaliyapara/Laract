@@ -10,20 +10,24 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
     $authuser = Auth::user();
     if ($authuser) {
         return redirect(route('home'));
     }
-    $posts = Blog::with(['user:id,name', 'comments.user:id,name'])
+    $val = $request->input('search', '');
+    $searchQuery = '%' . $val . '%';
+    $posts = Blog::where('posts', 'LIKE', $searchQuery)
+        ->with(['user:id,name,avatar', 'comments.user:id,name,avatar'])
         ->withCount(['likes', 'comments'])
-        ->orderBy('updated_at', 'desc')
+        ->orderBy('created_at', 'desc')
         ->paginate(perPage: 5)
         ->through(function ($post) {
             $post->posts = json_decode($post->posts, true);
             $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
             return $post;
         });
+
 
 
     return Inertia::render('welcome', [
@@ -36,10 +40,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', function (User $user, Request $request) {
         $authuser = Auth::user();
         if ($authuser) {
-            $val = $request->input('search', ''); 
+            $val = $request->input('search', '');
             $searchQuery = '%' . $val . '%';
             $posts = Blog::where('posts', 'LIKE', $searchQuery)
-                ->with(['user:id,name', 'comments.user:id,name'])
+                ->with(['user:id,name,avatar', 'comments.user:id,name,avatar'])
                 ->withCount(['likes', 'comments'])
                 ->orderBy('created_at', 'desc')
                 ->paginate(perPage: 5)
@@ -63,7 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect(route('home'));
         }
         $posts = Auth::user()->blog()
-            ->with(['user:id,name', 'comments.user:id,name'])
+            ->with(['user:id,name', 'comments.user:id,name,avatar'])
             ->withCount(['likes', 'comments'])
             ->orderBy('updated_at', 'desc')
             ->get()
@@ -82,7 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect(route('home'));
         }
         $posts = Auth::user()->blog()
-            ->with(['user:id,name', 'comments.user:id,name'])
+            ->with(['user:id,name,avatar', 'comments.user:id,name,avatar'])
             ->withCount(['likes', 'comments'])
             ->orderBy('updated_at', 'desc')
             ->paginate(2)

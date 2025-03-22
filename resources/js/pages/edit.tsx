@@ -70,7 +70,7 @@ export default function PostEdit({ blog }: { blog: Blog }) {
             setProcessing(true); // Start processing state
 
             const formData = new FormData();
-            formData.append('_method', 'put'); // Inertia uses _method for PUT requests
+            formData.append('_method', 'patch'); // Inertia uses _method for PUT requests
             formData.append('title', title);
             formData.append('post', post);
 

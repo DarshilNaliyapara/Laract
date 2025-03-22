@@ -2,8 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { router } from "@inertiajs/react";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import InputError from '@/components/input-error';
+
+dayjs.extend(relativeTime);
 
 interface Comment {
     id: number;
@@ -13,6 +18,7 @@ interface Comment {
     user: {
         id: number;
         name: string;
+        avatar: string; // Added avatar property
     };
 }
 
@@ -93,20 +99,16 @@ export default function Comments({ postId, comments, authUserId }: CommentsProps
                 {comments.length > 0 ? (
                     comments.map((comment) => (
                         <div key={comment.id} className="flex gap-3 items-start p-3 border rounded-md dark:bg-background bg-gray-100 shadow-sm">
-                            <div className="w-10 h-10 flex-shrink-0 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center text-sm font-bold text-gray-800 dark:text-gray-200">
+                            <Avatar className="h-8 w-8 overflow-hidden rounded-full">
+                                <AvatarImage src={`/storage/${comment.user.avatar}`} alt={comment.user.name} />
+                                <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                 {comment.user.name.charAt(0).toUpperCase()}
-                            </div>
+                                </AvatarFallback>
+                            </Avatar>
                             <div className="flex-1">
                                 <p className="font-semibold text-gray-900 dark:text-gray-100">{comment.user.name}</p>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
-                                    {new Date(comment.created_at).toLocaleString('en-US', {
-                                        day: 'numeric',
-                                        month: 'short',
-                                        year: 'numeric',
-                                        hour: 'numeric',
-                                        minute: 'numeric',
-                                        hour12: true,
-                                    })}
+                                  {dayjs(comment.created_at).fromNow()}
                                 </p>
                                 <p className="text-sm text-gray-800 dark:text-gray-300 mt-2 leading-relaxed">
                                     {comment.comment}
@@ -114,7 +116,7 @@ export default function Comments({ postId, comments, authUserId }: CommentsProps
                             </div>
                             {authUserId ? (
                                 <>
-                                    {(authUserId === comment.user_id  || route().current('blogs.adminshow')) && (
+                                    {(authUserId === comment.user_id || route().current('blogs.adminshow')) && (
                                         <Button variant="destructive" size="sm" className="flex items-center gap-2 cursor-pointer" onClick={() => deleteComment(comment.id)}>
                                             <Trash2 className="w-4 h-4" />
                                         </Button>
@@ -145,10 +147,10 @@ export default function Comments({ postId, comments, authUserId }: CommentsProps
                             submitComment();
                         }
                     }
-                }
+                    }
                     className="w-full h-10 px-3 bg-background text-sm border-2 rounded-md shadow-sm focus:ring focus:ring-gray-300 dark:focus:ring-gray-600"
                 />
-                <Button size="sm"  onClick={submitComment} className="px-4 py-2">
+                <Button size="sm" onClick={submitComment} className="px-4 py-2">
                     Comment
                 </Button>
             </div>

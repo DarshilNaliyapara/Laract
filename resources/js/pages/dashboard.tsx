@@ -2,9 +2,6 @@ import { useState, useMemo } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Trash2, Edit3, EyeIcon } from 'lucide-react';
 import { AgGridReact } from 'ag-grid-react';
 import {
@@ -62,8 +59,7 @@ interface Post {
 
 export default function Dashboard({ posts }: { posts: Post[] }) {
     console.log(posts);
-    const [selectedPost, setSelectedPost] = useState(null);
-    const deleteblog = (slug: string) => {
+      const deleteblog = (slug: string) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",

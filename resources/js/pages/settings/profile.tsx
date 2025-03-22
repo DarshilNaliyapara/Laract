@@ -1,7 +1,7 @@
 import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useState, useEffect } from 'react';
 
 import DeleteUser from '@/components/delete-user';
 import HeadingSmall from '@/components/heading-small';
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
+import { router } from '@inertiajs/react';
 import SettingsLayout from '@/layouts/settings/layout';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -22,22 +23,56 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface ProfileForm {
     name: string;
     email: string;
+    avatar: File | null;
 }
 
 export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
     const { auth } = usePage<SharedData>().props;
+    const [filepreview, setImagepreview] = useState<string | null>(null);
+    const [name, setName] = useState<string>(auth.user.name);
+    const [email, setEmail] = useState<string>(auth.user.email);
+    const [avatar, setImage] = useState<File | null>(null);
+    const [processing, setProcessing] = useState(false);
+    const { errors } = usePage().props;
+    const [recentlySuccessful, setRecentlySuccessful] = useState(false);
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
-        name: auth.user.name,
-        email: auth.user.email,
-    });
+    useEffect(() => {
+        if (auth.user.avatar) {
+            setImagepreview(`/storage/${auth.user.avatar}`); // Assuming this is a valid URL
+        }
+    }, [auth.user.avatar]);
 
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setImage(file);
+            setImagepreview(URL.createObjectURL(file));
+        }
+    };
 
-        patch(route('profile.update'), {
-            preserveScroll: true,
+    const submit: FormEventHandler = async (e) => {
+        setProcessing(true); // Start processing state
+
+        const formData = new FormData();
+        formData.append('_method', 'patch'); // Inertia uses _method for PUT requests
+        formData.append('name', name);
+        formData.append('email', email);
+
+        if (avatar) {
+            formData.append('avatar', avatar);
+        };
+        await router.post(route('profile.update'), formData, {
+            onFinish: () => {
+                setProcessing(false);
+                setRecentlySuccessful(true);
+                setTimeout(() => setRecentlySuccessful(false), 3000); // Reset after 3 seconds
+            },
         });
+
+
+        // patch(route('profile.update'), {
+        //     preserveScroll: true,
+        // });
     };
 
     return (
@@ -55,8 +90,8 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             <Input
                                 id="name"
                                 className="mt-1 block w-full"
-                                value={data.name}
-                                onChange={(e) => setData('name', e.target.value)}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 required
                                 autoComplete="name"
                                 placeholder="Full name"
@@ -72,8 +107,8 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                                 id="email"
                                 type="email"
                                 className="mt-1 block w-full"
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                                 autoComplete="username"
                                 placeholder="Email address"
@@ -104,6 +139,31 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             </div>
                         )}
 
+                        <div className="grid gap-2">
+                            <Label htmlFor="file">File</Label>
+                            <input
+                                id="file"
+                                type="file"
+                                onChange={handleFileChange}
+                                name="avatar" accept=".jpg,.png,.jpeg"
+                                data-toggle="tooltip" title="Choose Image file Less then 5Mb"
+                                className="block file:cursor-pointer file:mr-4 file:rounded-full file:border-0 file:bg-gray-500 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-300 hover:file:bg-gray-700 dark:file:bg-gray-600 dark:file:text-black-900 dark:hover:file:bg-gray-700 ..."
+                            />
+                            <InputError message={errors.avatar} />
+                        </div>
+                        {filepreview &&
+                            <div className="flex flex-wrap gap-4 mt-3">
+                                <div className="relative  md:w-1/2 lg:w-1/3 flex items-start">
+                                    <div className=" flex overflow-hidden rounded-lg">
+                                        <img
+                                            src={filepreview}
+                                            alt="Blog Preview"
+                                            className="cursor-pointer rounded-lg shadow-lg  max-h-96 object-contain"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        }
                         <div className="flex items-center gap-4">
                             <Button disabled={processing}>Save</Button>
 

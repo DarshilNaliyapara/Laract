@@ -105,7 +105,7 @@ class BlogController extends Controller
     public function show(Blog $blog)
     {
         $latest = Blog::where('slug', $blog->slug)
-            ->with('user:id,name,avatar', 'comments.user:id,name,avatar')
+            ->with('user:id,name,avatar', 'comments.user:id,name,avatar','comments.replies.user:id,name,avatar')
             ->withCount(['comments'])
             ->firstOrFail();
         $latest->posts = json_decode($latest->posts, true);
@@ -120,13 +120,13 @@ class BlogController extends Controller
     public function guestshow(Blog $blog)
     {
         $latest = Blog::where('slug', $blog->slug)
-            ->with('user:id,name,avatar', 'comments.user:id,name,avatar')
+            ->with('user:id,name,avatar', 'comments.user:id,name,avatar','comments.replies.user:id,name,avatar')
             ->withCount(['comments'])
             ->firstOrFail();
         $latest->posts = json_decode($latest->posts, true);
         $latest->comments = $latest->comments()->with('user:id,name')->get();
 
-        return Inertia::render('guest-show', [
+        return Inertia::render('guest/guest-show', [
 
             'blog' => $latest
         ]);
@@ -169,12 +169,12 @@ class BlogController extends Controller
     public function adminshow(Blog $blog)
     {
         $latest = Blog::where('slug', $blog->slug)
-            ->with('user:id,name,avatar', 'comments.user:id,name,avatar')
+            ->with('user:id,name,avatar', 'comments.user:id,name,avatar','comments.replies.user:id,name,avatar')
             ->withCount(['likes', 'comments'])
             ->firstOrFail();
         $latest->posts = json_decode($latest->posts, true);
         $latest->comments = $latest->comments()->with('user:id,name')->get();
-        return Inertia::render('admin-show', [
+        return Inertia::render('admin/admin-show', [
 
             'blog' => $latest
         ]);

@@ -2,8 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
-use App\Models\Comment;
 use App\Models\User;
+use App\Models\Reply;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -31,5 +32,28 @@ class CommentController extends Controller
         $comment->delete();
         return redirect()->back();
     }
-
+     
+    public function storereply(Request $request, Comment $comment): RedirectResponse
+    {
+      
+        $validated = $request->validate([
+            'replies' => 'required|string|max:255',
+        ]);
+       
+        $comment->replies()->create([
+            'replies' => $validated['replies'],
+            'user_id' => auth()->id(),
+           'comment_id' => $comment->id
+        ]);
+        
+      
+        return redirect()->back();
+    }
+   
+    public function destroyreply(Reply $reply):RedirectResponse
+    {
+        $reply->delete();
+ 
+        return redirect()->back();
+    }
 }

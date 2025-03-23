@@ -18,7 +18,7 @@ Route::get('/', function (Request $request) {
     $val = $request->input('search', '');
     $searchQuery = '%' . $val . '%';
     $posts = Blog::where('posts', 'LIKE', $searchQuery)
-        ->with(['user:id,name,avatar', 'comments.user:id,name,avatar'])
+        ->with(['user:id,name,avatar', 'comments.user:id,name,avatar','comments.replies.user:id,name,avatar'])
         ->withCount(['likes', 'comments'])
         ->orderBy('created_at', 'desc')
         ->paginate(perPage: 5)
@@ -30,7 +30,7 @@ Route::get('/', function (Request $request) {
 
 
 
-    return Inertia::render('welcome', [
+    return Inertia::render('guest/welcome', [
         'posts' => $posts
     ]);
 
@@ -43,7 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             $val = $request->input('search', '');
             $searchQuery = '%' . $val . '%';
             $posts = Blog::where('posts', 'LIKE', $searchQuery)
-                ->with(['user:id,name,avatar', 'comments.user:id,name,avatar'])
+                ->with(['user:id,name,avatar', 'comments.user:id,name,avatar', 'comments.replies.user:id,name,avatar'])
                 ->withCount(['likes', 'comments'])
                 ->orderBy('created_at', 'desc')
                 ->paginate(perPage: 5)
@@ -67,7 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect(route('home'));
         }
         $posts = Auth::user()->blog()
-            ->with(['user:id,name', 'comments.user:id,name,avatar'])
+            ->with(['user:id,name', 'comments.user:id,name,avatar','comments.replies.user:id,name,avatar'])
             ->withCount(['likes', 'comments'])
             ->orderBy('updated_at', 'desc')
             ->get()
@@ -77,7 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             });
 
 
-        return Inertia::render('dashboard', ['posts' => $posts]);
+        return Inertia::render('admin/dashboard', ['posts' => $posts]);
 
     })->name('dashboard');
 
@@ -86,7 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect(route('home'));
         }
         $posts = Auth::user()->blog()
-            ->with(['user:id,name,avatar', 'comments.user:id,name,avatar'])
+            ->with(['user:id,name,avatar', 'comments.user:id,name,avatar','comments.replies.user:id,name,avatar'])
             ->withCount(['likes', 'comments'])
             ->orderBy('updated_at', 'desc')
             ->paginate(2)
@@ -107,6 +107,15 @@ Route::post('/blogs/{blog}/dislike', [BlogController::class, 'dislike'])->middle
 Route::post('/blogs/{blog}/like', [BlogController::class, 'like'])->middleware(['auth', 'verified'])->name('blogs.like');
 Route::resource('blogs', BlogController::class)->middleware(['auth', 'verified']);
 Route::resource('comments', CommentController::class)->middleware(['auth', 'verified']);
+
+
+Route::post('comments/{comment}/storereply', [CommentController::class, 'storereply'])
+    ->name('comments.storereply')
+    ->middleware(['auth', 'verified']);
+
+Route::post('comments/destroyreply/{reply}', [CommentController::class, 'destroyreply'])
+    ->name('comments.destroyreply')
+    ->middleware(['auth', 'verified']);
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

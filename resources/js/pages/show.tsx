@@ -70,7 +70,7 @@ export default function PostShow({ blog }: { blog: Blog }) {
             <div className="flex h-auto flex-1 flex-col gap-4 rounded-xl p-4">
                 <div key={blog.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
                     <div className="p-4">
-                        <div className="flex flex-col m-1">
+                        <div className="flex flex-col">
                             <div className="flex items-center space-x-2">
                                 <Avatar className="h-8 w-8 overflow-hidden rounded-full">
                                     <AvatarImage src={`/storage/${blog.user.avatar}`} alt={blog.user.name} />

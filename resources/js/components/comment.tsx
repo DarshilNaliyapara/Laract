@@ -72,8 +72,6 @@ export default function Comments({ postId, comments, authUserId }: CommentsProps
                 setErrors({}); // Clear errors on success
             }
         });
-
-
     };
 
     const deleteComment = (id: number) => {

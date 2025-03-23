@@ -38,10 +38,11 @@ interface CommentsProps {
     postId: number;
     comments: Comment[];
     authUserId?: number;
+    postuserId:number;
 }
 
-export default function Comments({ postId, comments, authUserId }: CommentsProps) {
-
+export default function Comments({ postId, comments, authUserId,postuserId }: CommentsProps) {
+console.log(comments);
     const [commentText, setCommentText] = useState("");
     const [replyText, setReplyText] = useState("");
     const [errors, setErrors] = useState<{ comment?: string }>({});
@@ -147,7 +148,12 @@ export default function Comments({ postId, comments, authUserId }: CommentsProps
                                 </AvatarFallback>
                             </Avatar>
                             <div className="flex-1">
+                                <div className="flex items-center">
                                 <p className="font-semibold text-gray-900 dark:text-gray-100">{comment.user.name}</p>
+                                {postuserId === comment.user.id &&  <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 ml-2">
+                                  - author
+                                </p>}
+                                </div>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
                                     {dayjs(comment.created_at).fromNow()}
                                 </p>
@@ -160,7 +166,7 @@ export default function Comments({ postId, comments, authUserId }: CommentsProps
                                 {comment.replies && comment.replies.length > 0 && (
                                     <div className="mt-3 space-y-3 border-l-2 border-gray-300 dark:border-gray-700 pl-3">
                                         {comment.replies.map((reply) => (
-                                            <Reply replies={reply} authUserId={authUserId} />
+                                            <Reply replies={reply} authUserId={authUserId} postuserId={postuserId}/>
                                         ))}
                                     </div>
                                 )}

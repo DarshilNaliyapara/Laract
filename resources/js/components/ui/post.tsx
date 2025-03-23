@@ -128,7 +128,7 @@ export default function Post({ post }: PostProps) {
                                 {dayjs(post.created_at).fromNow()}
 
                                 {post.created_at !== post.updated_at && (
-                                    <small className="text-sm text-gray-400 ml-2 dark:text-gray-500">edited</small>
+                                    <small className="text-sm text-gray-400 ml-2 dark:text-gray-500">- edited</small>
                                 )}
 
                             </small>
@@ -231,7 +231,7 @@ export default function Post({ post }: PostProps) {
                     </div>
 
                     {commentingPost === post.id && (
-                        <Comments postId={post.id} comments={Array.isArray(post.comments) ? post.comments : []} authUserId={auth.user?.id} />
+                        <Comments postId={post.id} comments={Array.isArray(post.comments) ? post.comments : []} authUserId={auth.user?.id} postuserId={post.user.id} />
                     )}
                 </div>
             </div>

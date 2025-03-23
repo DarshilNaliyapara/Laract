@@ -93,7 +93,7 @@
                                             <small className="text-sm text-gray-400 dark:text-gray-500">
                                                 {dayjs(blog.created_at).fromNow()}
                                                 {blog.created_at !== blog.updated_at && (
-                                                    <small className="text-sm text-gray-400 ml-2 dark:text-gray-500">edited</small>
+                                                    <small className="text-sm text-gray-400 ml-2 dark:text-gray-500">- edited</small>
                                                 )}
                                             </small>
                                         </div>
@@ -137,7 +137,7 @@
                                             </div>
                                         </div>
                                         {commentingPost && (
-                                            <Comments postId={blog.id} comments={Array.isArray(blog.comments) ? blog.comments : []} authUserId={auth.user?.id} />
+                                            <Comments postId={blog.id} comments={Array.isArray(blog.comments) ? blog.comments : []} authUserId={auth.user?.id} postuserId={blog.user.id} />
                                         )}
                                     </div>
                                 </div>

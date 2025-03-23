@@ -15,9 +15,10 @@ interface ReplyProps {
         };
     };
     authUserId?: number;
+    postuserId: number;
 }
 
-export default function Reply({ replies, authUserId }: ReplyProps) {
+export default function Reply({ replies, authUserId, postuserId }: ReplyProps) {
     const deleteReply = (id: number) => {
         router.post(route("comments.destroyreply", id), {}, { preserveScroll: true });
     };
@@ -30,8 +31,12 @@ export default function Reply({ replies, authUserId }: ReplyProps) {
                 </AvatarFallback>
             </Avatar>
             <div className="flex-1">
-                <p className="font-semibold text-gray-900 dark:text-gray-100">{replies.user.name}</p>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
+                <div className="flex items-center">
+                    <p className="font-semibold text-gray-900 dark:text-gray-100">{replies.user.name}</p>
+                    {postuserId === replies.user.id && <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 ml-2">
+                        - author
+                    </p>}
+                </div> <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
                     {dayjs(replies.created_at).fromNow()}
                 </p>
                 <p className="text-sm text-gray-800 dark:text-gray-300 mt-2 leading-relaxed">

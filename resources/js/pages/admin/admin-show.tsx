@@ -42,6 +42,7 @@ interface Blog {
     liked: boolean;
     likes_count: number;
     comments_count: number;
+    replies_count:number;
     comments: string;
 }
 
@@ -87,9 +88,6 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                     </small>
                                 </div>
                             </div>
-
-
-
 
                             <div className="ml-10">
                                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -140,7 +138,8 @@ export default function PostShow({ blog }: { blog: Blog }) {
                         <ResponsiveContainer width="100%" height={250}>
                             <BarChart data={[
                                 { name: 'Likes', value: blog.likes_count },
-                                { name: 'Comments', value: blog.comments_count }
+                                { name: 'Comments', value: blog.comments_count },
+                                { name: 'Replies', value: blog.replies_count }
                             ]}>
                                 <XAxis dataKey="name" />
                                 <YAxis />

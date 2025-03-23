@@ -155,7 +155,7 @@ export default function Comments({ postId, comments, authUserId }: CommentsProps
                                     {comment.comment}
                                 </p>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 cursor-pointer" onClick={() => setReplyingTo(comment)}>
-                                    Reply
+                                   <strong>Reply</strong>
                                 </p>
                                 {comment.replies && comment.replies.length > 0 && (
                                     <div className="mt-3 space-y-3 border-l-2 border-gray-300 dark:border-gray-700 pl-3">

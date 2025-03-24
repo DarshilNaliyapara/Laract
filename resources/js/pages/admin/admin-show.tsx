@@ -42,7 +42,7 @@ interface Blog {
     liked: boolean;
     likes_count: number;
     comments_count: number;
-    replies_count:number;
+    replies_count: number;
     comments: string;
 }
 
@@ -70,8 +70,8 @@ export default function PostShow({ blog }: { blog: Blog }) {
             <div className="flex h-auto flex-1 flex-col gap-4 rounded-xl p-4">
                 <div key={blog.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
                     <div className="p-4">
-                        <div className="flex flex-col m-1">
-                            <div className="flex justify-between">
+                        <div className="flex flex-col">
+                            <div className="flex items-center space-x-2">
                                 <div className="flex items-center space-x-2">
                                     <Avatar className="h-8 w-8 overflow-hidden rounded-full">
                                         <AvatarImage src={`/storage/${blog.user.avatar}`} alt={blog.user.name} />
@@ -103,7 +103,6 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                                     className="cursor-pointer rounded-lg shadow object-cover w-full h-full"
                                                     src={imgSrc}
                                                     alt="Blog Image"
-
                                                 />
                                             </Zoom>
                                         </div>
@@ -127,13 +126,12 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                 </div>
                             </div>
                             {commentingPost && (
-                                <Comments postId={blog.id} comments={Array.isArray(blog.comments) ? blog.comments : []} authUserId={auth.user.id} postuserId={blog.user.id}/>
+                                <Comments postId={blog.id} comments={Array.isArray(blog.comments) ? blog.comments : []} authUserId={auth.user.id} postuserId={blog.user.id} />
                             )}
                         </div>
                     </div>
                 </div>
                 <div className="mt-6">
-
                     <div className="p-4">
                         <ResponsiveContainer width="100%" height={250}>
                             <BarChart data={[

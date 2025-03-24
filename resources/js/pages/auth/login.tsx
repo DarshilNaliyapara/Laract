@@ -1,7 +1,7 @@
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
-
+import toast from 'react-hot-toast';
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
+import { usePage } from '@inertiajs/react';
+import { type SharedData } from '@/types';
 
 type LoginForm = {
     email: string;
@@ -22,6 +24,8 @@ interface LoginProps {
 }
 
 export default function Login({ status, canResetPassword }: LoginProps) {
+    const { auth } = usePage<SharedData>().props;
+
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         email: '',
         password: '',
@@ -32,6 +36,16 @@ export default function Login({ status, canResetPassword }: LoginProps) {
         e.preventDefault();
         post(route('login'), {
             onFinish: () => reset('password'),
+            onSuccess: () => toast.success("Login Successful!", {
+               style: {
+                        borderRadius: '10px',
+                        background: 'rgba(1, 1, 1, 0.3)', 
+                        color: '#fff',
+                        backdropFilter: 'blur(30px)', 
+                        border: '1px solid rgba(200, 200, 200, 0.2)', 
+                        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)' 
+                    },
+            })
         });
     };
 

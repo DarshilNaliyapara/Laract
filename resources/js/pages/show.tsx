@@ -58,6 +58,7 @@ export default function PostShow({ blog }: { blog: Blog }) {
 
         setFormattedPost(linkedPost);
     }, [blog.posts]);
+    
     const toggleComment = (postId: number) => {
         setCommentingPost(commentingPost === postId ? null : postId);
     };

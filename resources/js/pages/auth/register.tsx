@@ -1,7 +1,7 @@
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
-
+import toast from 'react-hot-toast';
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
@@ -28,6 +28,14 @@ export default function Register() {
         e.preventDefault();
         post(route('register'), {
             onFinish: () => reset('password', 'password_confirmation'),
+            onSuccess: () =>  toast.success('Registration Successful, Verify Email!', {
+                style: {
+                    borderRadius: '10px',
+                    background: 'rgba(1, 1, 1, 0.3)',
+                    color: '#fff',
+                    backdropFilter: 'blur(30px)'
+                },
+            })
         });
     };
 

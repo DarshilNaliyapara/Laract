@@ -23,11 +23,11 @@ export default function VerifyEmail({ status }: { status?: string }) {
 
         post(route('verification.send'));
     };
-   
-       const submitotp: FormEventHandler = (e) => {
-           e.preventDefault();
-           post(route('verification.verify.otp'));
-       };
+
+    const submitotp: FormEventHandler = (e) => {
+        e.preventDefault();
+        post(route('verification.verify.otp'));
+    };
 
     return (
         <AuthLayout title="Verify email" description="Please verify your email address by clicking on the link we just emailed to you.">
@@ -38,10 +38,10 @@ export default function VerifyEmail({ status }: { status?: string }) {
                     A new verification link has been sent to the email address you provided during registration.
                 </div>
             )}
-           <form className="flex flex-col gap-6 text-center" onSubmit={submitotp}>
+            <form className="flex flex-col gap-6 text-center" onSubmit={submitotp}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        
+
                         <Input
                             id="otp"
                             type="text"
@@ -57,7 +57,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
                         <InputError message={errors.otp} className="mt-2" />
                     </div>
 
-                    <Button type="submit" className="mb-2"  disabled={processing}>
+                    <Button type="submit" className="mb-2" disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Verify Email
                     </Button>

@@ -8,7 +8,7 @@ interface AppLogoProps {
 export default function AppLogo({ path }: AppLogoProps) {
     return (
         <>
-            <Link href={path} prefetch>
+            <Link href={path}>
                 <div className='flex items-center'>
                     <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-md">
                         <AppLogoIcon className="size-5 fill-current text-white dark:text-black" />

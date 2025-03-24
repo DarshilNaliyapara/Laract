@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { router, Link } from '@inertiajs/react';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import Swal from "sweetalert2";
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -64,36 +65,45 @@ export default function PostEdit({ blog }: { blog: Blog }) {
     };
 
     const submit: FormEventHandler = async (e) => {
-        try {
-            e.preventDefault();
-            setProcessing(true); // Start processing state
 
-            const formData = new FormData();
-            formData.append('_method', 'patch'); // Inertia uses _method for PUT requests
-            formData.append('title', title);
-            formData.append('post', post);
+        e.preventDefault();
+        setProcessing(true);
 
-            if (file) {
-                formData.append('file', file);
-            }
-            await router.post(route('blogs.update', blog.slug), formData, {
-                onFinish: () => setProcessing(false),
-                onSuccess: () => Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Post Updated Successfully!",
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            });
+        const formData = new FormData();
+        formData.append('_method', 'patch');
+        formData.append('title', title);
+        formData.append('post', post);
 
-        } catch (error) {
-            Swal.fire({
-                title: "Error",
-                text: (error as any).response?.data?.message || "Something went wrong!",
-                icon: "error",
-            });
+        if (file) {
+            formData.append('file', file);
         }
+        await router.post(route('blogs.update', blog.slug), formData, {
+            onFinish: () => setProcessing(false),
+            onSuccess: () =>
+                toast.success('Post Updated Successfully', {
+                    style: {
+                        borderRadius: '10px',
+                        background: 'rgba(1, 1, 1, 0.3)',
+                        color: '#fff',
+                        backdropFilter: 'blur(30px)',
+                        border: '1px solid rgba(200, 200, 200, 0.2)',
+                        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
+                    },
+                }),
+            onError: () =>
+                toast.error('Failed to Update Post', {
+                    style: {
+                        borderRadius: '10px',
+                        background: 'rgba(1, 1, 1, 0.3)',
+                        color: '#fff',
+                        backdropFilter: 'blur(30px)',
+                        border: '1px solid rgba(200, 200, 200, 0.2)',
+                        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
+                    },
+                })
+        });
+
+
     };
 
     return (

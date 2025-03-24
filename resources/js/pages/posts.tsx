@@ -8,9 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Pagination from '@/components/paginate';
 import { Label } from '@/components/ui/label';
-import Swal from "sweetalert2";
 import { Link } from '@inertiajs/react';
 import Post from '@/components/post';
+import toast from 'react-hot-toast';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -82,26 +82,21 @@ export default function Posts({ posts }: { posts: PostsData }) {
   };
 
   const submit: FormEventHandler = async (e) => {
-    try {
-      e.preventDefault();
-      await post(route('blogs.store'), {
-        onSuccess: () => Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Post Created Successfully!",
-          showConfirmButton: false,
-          timer: 1500
-        })
-      });
-    } catch (error) {
-      console.log(error)
-      Swal.fire({
-        title: "Error",
-        text: (error as any).response?.data?.message || "Something went wrong!",
-        icon: "error",
-      });
-    }
 
+    e.preventDefault();
+    await post(route('blogs.store'), {
+      onSuccess: () => toast.success('Post Created Successfully', {
+        style: {
+          borderRadius: '10px',
+          background: 'rgba(1, 1, 1, 0.3)',
+          color: '#fff',
+          backdropFilter: 'blur(30px)',
+          border: '1px solid rgba(200, 200, 200, 0.2)',
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
+        },
+      })
+    },
+    );
   };
 
   const [commentingPost, setCommentingPost] = useState<number | null>(null);
@@ -109,9 +104,10 @@ export default function Posts({ posts }: { posts: PostsData }) {
   const toggleComment = (postId: number) => {
     setCommentingPost(commentingPost === postId ? null : postId);
   };
-  
+
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
+
       <Head title="Posts" />
       <div className="flex h-auto flex-1 flex-col gap-4 rounded-xl p-4">
         <div className="border-sidebar-border/70 dark:border-sidebar-border relative overflow-hidden rounded-xl border p-4">
@@ -122,7 +118,6 @@ export default function Posts({ posts }: { posts: PostsData }) {
                 <Input
                   id="title"
                   type="text"
-                  // required
                   autoFocus
                   tabIndex={1}
                   autoComplete="title"
@@ -138,7 +133,6 @@ export default function Posts({ posts }: { posts: PostsData }) {
                 <Label htmlFor="post">Post</Label>
                 <textarea
                   id="post"
-                  // required
                   className='border-textarea h-20 file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'
                   tabIndex={2}
                   autoComplete="post"

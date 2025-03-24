@@ -8,6 +8,7 @@ import { router } from "@inertiajs/react";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import InputError from '@/components/input-error';
 import Reply from "./reply";
+import toast from "react-hot-toast";
 
 dayjs.extend(relativeTime);
 
@@ -19,7 +20,7 @@ interface Comment {
     user: {
         id: number;
         name: string;
-        avatar: string; 
+        avatar: string;
     };
     replies: {
         id: number;
@@ -67,49 +68,46 @@ export default function Comments({ postId, comments, authUserId, postuserId }: C
         }, {
             preserveScroll: true,
             onError: (err) => {
+
                 setErrors(err);
             },
             onSuccess: () => {
+
                 setCommentText("");
-                setErrors({}); 
+                setErrors({});
             }
         });
     };
 
     const deleteComment = (id: number) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                try {
-                    router.post(route('comments.destroy', id), {
-                        _method: 'delete'
-                    }, {
-                        preserveScroll: true
-                    });
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Comment Deleted Successfully!",
-                        showConfirmButton: false,
-                        timer: 1800,
 
-                    });
-                } catch (error) {
-                    Swal.fire({
-                        title: "Error",
-                        text: (error as any).response?.data?.message || "Something went wrong!",
-                        icon: "error",
-                    });
-                }
-            }
-        })
+        router.post(route('comments.destroy', id), {
+            _method: 'delete'
+        }, {
+            onSuccess: () =>
+                toast.success('Comment Deleted Successfully', {
+                    style: {
+                        borderRadius: '10px',
+                        background: 'rgba(1, 1, 1, 0.3)',
+                        color: '#fff',
+                        backdropFilter: 'blur(30px)',
+                        border: '1px solid rgba(200, 200, 200, 0.2)',
+                        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
+                    },
+                }),
+            onError: () =>
+                toast.error('Failed to Deleted Comment', {
+                    style: {
+                        borderRadius: '10px',
+                        background: 'rgba(1, 1, 1, 0.3)',
+                        color: '#fff',
+                        backdropFilter: 'blur(30px)',
+                        border: '1px solid rgba(200, 200, 200, 0.2)',
+                        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
+                    },
+                }),
+            preserveScroll: true
+        });
     };
 
     const submitReply = () => {
@@ -203,8 +201,8 @@ export default function Comments({ postId, comments, authUserId, postuserId }: C
                     id="comment"
                     type="text"
                     required
-                    ref={inputRef} 
-                    autoFocus={!replyingTo} 
+                    ref={inputRef}
+                    autoFocus={!replyingTo}
                     placeholder={replyingTo ? "Write a reply..." : "Write a comment..."}
                     value={replyingTo ? replyText : commentText}
                     onChange={(e) =>

@@ -54,7 +54,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
         setProcessing(true);
 
         const formData = new FormData();
-        formData.append('_method', 'patch'); 
+        formData.append('_method', 'patch');
         formData.append('name', name);
         formData.append('email', email);
 

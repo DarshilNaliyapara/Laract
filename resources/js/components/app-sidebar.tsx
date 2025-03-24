@@ -4,14 +4,14 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookAIcon, BookOpen, BookOpenIcon, Folder, LayoutGrid } from 'lucide-react';
+import { BookOpenIcon, Home } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Home',
         href: '/home',
-        icon: LayoutGrid,
+        icon: Home,
     },
     {
         title: 'Posts',

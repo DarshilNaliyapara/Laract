@@ -9,6 +9,7 @@ import { type SharedData } from '@/types';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { router } from "@inertiajs/react";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 dayjs.extend(relativeTime);
 
@@ -32,7 +33,7 @@ interface PostProps {
         user: {
             name: string;
             id: number;
-            avatar: string; 
+            avatar: string;
         };
     };
     commentingPost: number | null;
@@ -64,26 +65,33 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                try {
-                    router.post(route('blogs.destroy', slug), {
-                        _method: 'delete'
-                    }, {
-                        preserveScroll: true
-                    });
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Deleted Successfully!",
-                        showConfirmButton: false,
-                        timer: 1800
-                    });
-                } catch (error) {
-                    Swal.fire({
-                        title: "Error",
-                        text: (error as any).response?.data?.message || "Something went wrong!",
-                        icon: "error",
-                    });
-                }
+
+                router.post(route('blogs.destroy', slug), {
+                    _method: 'delete',
+
+                }, {
+                    onSuccess: () => toast.success('Post Deleted Successfully', {
+                        style: {
+                            borderRadius: '10px',
+                            background: 'rgba(1, 1, 1, 0.3)',
+                            color: '#fff',
+                            backdropFilter: 'blur(30px)',
+                            border: '1px solid rgba(200, 200, 200, 0.2)',
+                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
+                        },
+                    }),
+                    onError: () => toast.error('Failed to Deleted Post', {
+                        style: {
+                            borderRadius: '10px',
+                            background: 'rgba(1, 1, 1, 0.3)',
+                            color: '#fff',
+                            backdropFilter: 'blur(30px)',
+                            border: '1px solid rgba(200, 200, 200, 0.2)',
+                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
+                        },
+                    }),
+                    preserveScroll: true
+                });
             }
         })
     };

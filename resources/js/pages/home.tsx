@@ -5,6 +5,8 @@ import Pagination from '@/components/paginate';
 import { Link } from '@inertiajs/react';
 import Post from '@/components/post';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Home', href: '/home' },
@@ -52,7 +54,8 @@ export default function Home({ posts }: { posts: PostsData }) {
     const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
     const toggleComment = (postId: number) => {
-        setCommentingPost( commentingPost === postId ? null : postId);
+        setCommentingPost(commentingPost === postId ? null : postId);
+
     };
 
     const formattedPosts = Array.isArray(posts.data) ? posts.data : [];
@@ -70,6 +73,7 @@ export default function Home({ posts }: { posts: PostsData }) {
                 ) : (
                     <p className="text-center text-gray-500 dark:text-gray-400">No posts available</p>
                 )}
+
                 {formattedPosts.length > 0 &&
                     <Pagination
                         links={posts.links}

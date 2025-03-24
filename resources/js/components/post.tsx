@@ -32,7 +32,7 @@ interface PostProps {
         user: {
             name: string;
             id: number;
-            avatar: string; // Added avatar property
+            avatar: string; 
         };
     };
     commentingPost: number | null;
@@ -95,7 +95,6 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
             ? words.slice(0, limit).join(" ") + " <strong>...Read More</strong>"
             : text;
 
-        // Convert URLs into clickable links
         truncatedText = truncatedText
             .replace(/\n/g, "<br>")
             .replace(
@@ -129,7 +128,6 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
                             </small>
                         </div>
 
-                        {/* Like & Dislike */}
                         <div className="text-right flex gap-2 justify-end">
                             {post.liked ? (
                                 <svg

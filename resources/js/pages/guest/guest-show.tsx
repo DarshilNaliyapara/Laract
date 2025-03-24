@@ -65,7 +65,6 @@ export default function PostGuestShow({ blog }: { blog: Blog }) {
             </Head>
 
             <div className="flex flex-col min-h-screen">
-                {/* Header */}
                 <header className="w-full p-4 bg-white shadow-md dark:bg-black border-b-2 flex justify-between items-center">
                     <AppLogo path={route('welcome')} />
                     <div className="flex items-center space-x-2">
@@ -78,13 +77,11 @@ export default function PostGuestShow({ blog }: { blog: Blog }) {
                     </div>
                 </header>
 
-                {/* Main Content */}
                 <main className="flex-grow flex p-4">
                     <div className="flex flex-1 flex-col gap-4 rounded-xl p-4">
                         <div key={blog.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
                             <div className="p-4">
                                 <div className="flex flex-col">
-                                    {/* User Info */}
                                     <div className="flex items-center space-x-2">
                                         <Avatar className="h-8 w-8 overflow-hidden rounded-full">
                                             <AvatarImage src={`/storage/${blog.user.avatar}`} alt={blog.user.name} />
@@ -101,13 +98,11 @@ export default function PostGuestShow({ blog }: { blog: Blog }) {
                                         </small>
                                     </div>
 
-                                    {/* Post Content */}
                                     <div className="ml-10">
                                         <h2 className="text-2xl mt-1 font-bold text-gray-900 dark:text-white">
                                             {blog.posts.title}
                                         </h2>
 
-                                        {/* Image with Zoom */}
                                         {blog.photo_name && (
                                             <div className="flex flex-wrap gap-4 mt-3">
                                                 <div className="relative md:w-1/2 lg:w-1/3 flex items-start">
@@ -124,13 +119,11 @@ export default function PostGuestShow({ blog }: { blog: Blog }) {
                                             </div>
                                         )}
 
-                                        {/* Post Body */}
                                         <p
                                             className="text-gray-700 dark:text-gray-300 mt-2 postContent"
                                             dangerouslySetInnerHTML={{ __html: formattedPost }}
                                         ></p>
 
-                                        {/* Comments Button */}
                                         <div className="mt-4 flex gap-3">
                                             <Button
                                                 variant="outline"
@@ -144,7 +137,6 @@ export default function PostGuestShow({ blog }: { blog: Blog }) {
                                         </div>
                                     </div>
 
-                                    {/* Comments Section */}
                                     {commentingPost === blog.id && (
                                         <Comments
                                             postId={blog.id}

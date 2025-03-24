@@ -10,7 +10,6 @@ import Pagination from '@/components/paginate';
 import { Label } from '@/components/ui/label';
 import Swal from "sweetalert2";
 import { Link } from '@inertiajs/react';
-
 import Post from '@/components/post';
 
 
@@ -20,12 +19,14 @@ const breadcrumbs: BreadcrumbItem[] = [
     href: '/posts',
   },
 ];
+
 type PostForm = {
   title: string;
   post: string;
   file: File | null;
   page: number;
 };
+
 interface Post {
   id: number;
   user_id: number;
@@ -102,11 +103,13 @@ export default function Posts({ posts }: { posts: PostsData }) {
     }
 
   };
+
   const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
   const toggleComment = (postId: number) => {
     setCommentingPost(commentingPost === postId ? null : postId);
   };
+  
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Posts" />

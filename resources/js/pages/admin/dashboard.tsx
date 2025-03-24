@@ -41,7 +41,7 @@ interface Post {
     user_id: number;
     posts: {
         title: string;
-        post:string;
+        post: string;
     };
     photo_name: string;
     created_at: string;
@@ -58,8 +58,8 @@ interface Post {
 
 
 export default function Dashboard({ posts }: { posts: Post[] }) {
- 
-      const deleteblog = (slug: string) => {
+
+    const deleteblog = (slug: string) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -104,7 +104,7 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
             headerName: 'Action',
             field: 'action',
             cellRenderer: (params: { data: Post, value: string }) => {
-               
+
                 return (
                     <div className="flex gap-2 mt-2">
                         <Link href={route('blogs.adminshow', params.value)}>
@@ -121,7 +121,7 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
                                 type='button'
                                 onClick={() => deleteblog(params.value)}
                             >
-                                <Trash2  />
+                                <Trash2 />
                             </a>
                         </form>
                     </div>
@@ -130,8 +130,8 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
             flex: 3
         }
     ];
+
     const rowData = posts.map((post) => {
-       
         return {
             id: post.id,
             title: post.posts.title,
@@ -139,22 +139,13 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
             likes: post.likes_count,
             comments: post.comments_count,
             action: post.slug,
-
         };
     });
-
 
     const theme = useMemo<Theme | "legacy">(() => {
         return myTheme;
     }, []);
-    const defaultColDef = useMemo<ColDef>(() => {
-        return {
-            editable: true,
-            flex: 1,
-            minWidth: 100,
-            filter: true,
-        };
-    }, []);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -165,7 +156,7 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
 
                 <div className=" border-sidebar-border/70 dark:border-sidebar-border rounded-xl border p-4">
                     <AgGridReact
-                        key={JSON.stringify(posts)} // Forces a re-render when posts change
+                        key={JSON.stringify(posts)} 
                         rowData={rowData}
                         columnDefs={columnDefs}
                         domLayout="autoHeight"
@@ -175,7 +166,7 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
                         theme={theme}
                     />
                 </div>
-                
+
             </div>
         </AppLayout>
     );

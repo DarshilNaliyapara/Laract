@@ -46,10 +46,10 @@ interface Blog {
 
 export default function PostShow({ blog }: { blog: Blog }) {
     const [commentingPost, setCommentingPost] = useState<number | null>(null);
-
-    const { auth } = usePage<SharedData>().props;
     const [formattedPost, setFormattedPost] = useState("");
     const imgSrc = `/storage/${blog.photo_name}`;
+
+    const { auth } = usePage<SharedData>().props;
 
     useEffect(() => {
         const linkedPost = blog.posts.post
@@ -64,7 +64,6 @@ export default function PostShow({ blog }: { blog: Blog }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Posts" />
-
             <div className="flex h-auto flex-1 flex-col gap-4 rounded-xl p-4">
                 <div key={blog.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
                     <div className="p-4">

@@ -19,7 +19,7 @@ interface Comment {
     user: {
         id: number;
         name: string;
-        avatar: string; // Added avatar property
+        avatar: string; 
     };
     replies: {
         id: number;
@@ -71,7 +71,7 @@ export default function Comments({ postId, comments, authUserId, postuserId }: C
             },
             onSuccess: () => {
                 setCommentText("");
-                setErrors({}); // Clear errors on success
+                setErrors({}); 
             }
         });
     };
@@ -197,7 +197,6 @@ export default function Comments({ postId, comments, authUserId, postuserId }: C
                 </div>
             )}
             <InputError message={errors.comment} className="mt-2" />
-
 
             <div className="mt-3 flex items-center gap-3">
                 <input

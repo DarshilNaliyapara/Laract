@@ -1,10 +1,8 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
-import { Card, CardContent } from "@/components/ui/card";
 import { Pencil, Trash2, MessageCircle } from "lucide-react";
 import { useEffect, useState } from 'react';
-import { router } from '@inertiajs/react';
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Button } from '@/components/ui/button';

@@ -3,7 +3,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import Pagination from '@/components/paginate';
 import { Link } from '@inertiajs/react';
-import Post from '@/components/ui/post';
+import Post from '@/components/post';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [

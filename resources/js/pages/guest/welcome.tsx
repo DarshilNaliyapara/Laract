@@ -2,7 +2,7 @@ import AppLogo from '@/components/app-logo';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Pagination from '@/components/paginate';
-import Post from '@/components/ui/post';
+import Post from '@/components/post';
 import { Input } from '@/components/ui/input';
 import { useState } from "react";
 import { router } from '@inertiajs/react';

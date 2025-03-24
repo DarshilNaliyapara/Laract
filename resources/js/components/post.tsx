@@ -4,7 +4,7 @@ import { MessageCircle, Pencil, Trash2 } from "lucide-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "@inertiajs/react";
-import Comments from "../comment";
+import Comments from "./comment";
 import { type SharedData } from '@/types';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { router } from "@inertiajs/react";

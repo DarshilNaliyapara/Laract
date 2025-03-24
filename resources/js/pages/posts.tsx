@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import Swal from "sweetalert2";
 import { Link } from '@inertiajs/react';
 
-import Post from '@/components/ui/post';
+import Post from '@/components/post';
 
 
 const breadcrumbs: BreadcrumbItem[] = [

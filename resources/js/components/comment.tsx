@@ -78,7 +78,7 @@ export default function Comments({ postId, comments, authUserId, postuserId }: C
             }
         });
     };
-  
+
     const deleteComment = (id: number) => {
         try {
             router.post(route('comments.destroy', id), {
@@ -198,7 +198,7 @@ export default function Comments({ postId, comments, authUserId, postuserId }: C
             )}
             <InputError message={errors.comment} className="mt-2" />
 
-            <div className="mt-3 flex items-center gap-3">
+            <div className="mt-3 flex items-center gap-2">
                 <input
                     id="comment"
                     type="text"
@@ -217,8 +217,8 @@ export default function Comments({ postId, comments, authUserId, postuserId }: C
                     }}
                     className="w-full h-10 px-3 bg-background text-sm border-2 rounded-md shadow-sm focus:ring focus:ring-gray-300 dark:focus:ring-gray-600"
                 />
-                <Button size="sm" onClick={replyingTo ? submitReply : submitComment} className="mr-1.5 h-8">
-                    <Send />
+                <Button size="sm" onClick={replyingTo ? submitReply : submitComment} className="mr-2 h-10 w-10">
+                    <Send style={{ width: '20px', height: '20px' }} />
                 </Button>
             </div>
         </div>

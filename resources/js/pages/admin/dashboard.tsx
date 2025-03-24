@@ -58,7 +58,7 @@ interface Post {
 
 
 export default function Dashboard({ posts }: { posts: Post[] }) {
-    console.log(posts);
+ 
       const deleteblog = (slug: string) => {
         Swal.fire({
             title: "Are you sure?",
@@ -104,8 +104,7 @@ export default function Dashboard({ posts }: { posts: Post[] }) {
             headerName: 'Action',
             field: 'action',
             cellRenderer: (params: { data: Post, value: string }) => {
-                // const postData = JSON.parse(params.data.posts); // Parse JSON string into object
-                console.log(params.data.id);
+               
                 return (
                     <div className="flex gap-2 mt-2">
                         <Link href={route('blogs.adminshow', params.value)}>

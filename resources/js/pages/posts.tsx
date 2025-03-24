@@ -102,7 +102,11 @@ export default function Posts({ posts }: { posts: PostsData }) {
     }
 
   };
+  const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
+  const toggleComment = (postId: number) => {
+    setCommentingPost(commentingPost === postId ? null : postId);
+  };
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Posts" />
@@ -180,7 +184,8 @@ export default function Posts({ posts }: { posts: PostsData }) {
         {formattedPosts.length > 0 ? (
           formattedPosts.map((post) => {
             return (
-              <Post key={post.id} post={post} />
+              <Post key={post.id} post={post} commentingPost={commentingPost}
+                toggleComment={toggleComment} />
             );
           })
         ) : (

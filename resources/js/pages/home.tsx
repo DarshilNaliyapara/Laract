@@ -4,6 +4,7 @@ import { Head, useForm, usePage } from '@inertiajs/react';
 import Pagination from '@/components/paginate';
 import { Link } from '@inertiajs/react';
 import Post from '@/components/ui/post';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Home', href: '/home' },
@@ -28,7 +29,7 @@ interface Post {
     user: {
         name: string;
         id: number;
-        avatar: string; 
+        avatar: string;
     };
 }
 
@@ -48,6 +49,12 @@ export default function Home({ posts }: { posts: PostsData }) {
     const { data, setData } = useForm({
         page: posts.current_page
     });
+    const [commentingPost, setCommentingPost] = useState<number | null>(null);
+
+    const toggleComment = (postId: number) => {
+        setCommentingPost( commentingPost === postId ? null : postId);
+    };
+
     const formattedPosts = Array.isArray(posts.data) ? posts.data : [];
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -56,7 +63,8 @@ export default function Home({ posts }: { posts: PostsData }) {
                 {formattedPosts.length > 0 ? (
                     formattedPosts.map((post) => {
                         return (
-                            <Post key={post.id}  post={post} />
+                            <Post key={post.id} post={post} commentingPost={commentingPost}
+                                toggleComment={toggleComment} />
                         );
                     })
                 ) : (

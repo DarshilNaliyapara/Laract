@@ -45,7 +45,7 @@
     }
 
     export default function PostGuestShow({ blog }: { blog: Blog }) {
-    console.log(blog);
+    
         const [formattedPost, setFormattedPost] = useState("");
         const imgSrc = `/storage/${blog.photo_name}`;
         const [commentingPost, setCommentingPost] = useState<number | null>(null);

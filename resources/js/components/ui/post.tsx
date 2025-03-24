@@ -37,11 +37,12 @@ interface PostProps {
             avatar: string; // Added avatar property
         };
     };
+    commentingPost: number | null;
+    toggleComment: (postId: number) => void;
 }
 
-export default function Post({ post }: PostProps) {
+export default function Post({ post, commentingPost, toggleComment }: PostProps) {
     const { auth } = usePage<SharedData>().props;
-    const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
     const like = (slug: string) => {
         router.post(route('blogs.like', slug), {}, {
@@ -106,11 +107,7 @@ export default function Post({ post }: PostProps) {
 
         return truncatedText;
     };
-
-    const toggleComment = (postId: number) => {
-        setCommentingPost(commentingPost === postId ? null : postId);
-    };
-
+    
     return (
         <div key={post.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
             <div className="p-3">

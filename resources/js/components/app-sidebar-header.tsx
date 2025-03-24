@@ -8,7 +8,7 @@ import { SearchIcon } from 'lucide-react';
 
 export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItemType[] }) {
     const [searchText, setSearchText] = useState("");
-    console.log(searchText);
+    
     const searchblog = () => {
         router.get(route('home'), {
             search: searchText,

@@ -42,7 +42,7 @@ interface CommentsProps {
 }
 
 export default function Comments({ postId, comments, authUserId,postuserId }: CommentsProps) {
-console.log(comments);
+
     const [commentText, setCommentText] = useState("");
     const [replyText, setReplyText] = useState("");
     const [errors, setErrors] = useState<{ comment?: string }>({});
@@ -166,7 +166,7 @@ console.log(comments);
                                 {comment.replies && comment.replies.length > 0 && (
                                     <div className="mt-3 space-y-3 border-l-2 border-gray-300 dark:border-gray-700 pl-3">
                                         {comment.replies.map((reply) => (
-                                            <Reply replies={reply} authUserId={authUserId} postuserId={postuserId}/>
+                                            <Reply key={reply.id} replies={reply} authUserId={authUserId} postuserId={postuserId}/>
                                         ))}
                                     </div>
                                 )}
@@ -184,7 +184,7 @@ console.log(comments);
                         </div>
                     ))
                 ) : (
-                    <p className="text-gray-500 dark:text-gray-400">No comments yet.</p>
+                    <p className="text-gray-500 dark:text-gray-400">Be First to Comment.</p>
                 )}
             </div>
             {replyingTo && (

@@ -49,7 +49,7 @@ interface PostsData {
 }
 export default function Laract({ posts }: { posts: PostsData }) {
     const [searchText, setSearchText] = useState("");
-    console.log(searchText);
+   
     const searchblog = () => {
         router.get(route('welcome'), {
             search: searchText,
@@ -58,6 +58,12 @@ export default function Laract({ posts }: { posts: PostsData }) {
     const { data, setData } = useForm({
         page: posts.current_page
     });
+    const [commentingPost, setCommentingPost] = useState<number | null>(null);
+
+    const toggleComment = (postId: number) => {
+        setCommentingPost(commentingPost === postId ? null : postId);
+    };
+
     const formattedPosts = Array.isArray(posts.data) ? posts.data : [];
     return (
         <>
@@ -88,7 +94,8 @@ export default function Laract({ posts }: { posts: PostsData }) {
                             formattedPosts.map((post) => {
                                 return (
                                     <div key={post.id} className="flex flex-col gap-2 p-2">
-                                        <Post key={post.id} post={post} />
+                                        <Post key={post.id} post={post} commentingPost={commentingPost}
+                                            toggleComment={toggleComment} />
                                     </div>
                                 );
                             })

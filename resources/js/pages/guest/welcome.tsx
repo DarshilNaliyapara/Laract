@@ -33,7 +33,6 @@ interface Post {
     likes_count: number;
     comments: string;
     comments_count: number;
-
 }
 
 interface Link {
@@ -108,7 +107,6 @@ export default function Laract({ posts }: { posts: PostsData }) {
                                     links={posts.links}
                                     currentPage={posts.current_page}
                                     setCurrentPage={(page) => setData('page', page)}
-
                                 />
                             )}
                         </div>
@@ -116,6 +114,5 @@ export default function Laract({ posts }: { posts: PostsData }) {
                 </main>
             </div>
         </>
-
     );
 }

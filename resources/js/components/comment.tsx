@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect  } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Send, Trash2, X } from "lucide-react";
 import Swal from "sweetalert2";
@@ -38,10 +38,10 @@ interface CommentsProps {
     postId: number;
     comments: Comment[];
     authUserId?: number;
-    postuserId:number;
+    postuserId: number;
 }
 
-export default function Comments({ postId, comments, authUserId,postuserId }: CommentsProps) {
+export default function Comments({ postId, comments, authUserId, postuserId }: CommentsProps) {
 
     const [commentText, setCommentText] = useState("");
     const [replyText, setReplyText] = useState("");
@@ -54,6 +54,7 @@ export default function Comments({ postId, comments, authUserId,postuserId }: Co
             inputRef.current.focus();
         }
     }, [replyingTo]);
+
     const submitComment = () => {
         if (commentText.trim() === "") {
             setErrors({ comment: "Comment cannot be empty." });
@@ -149,10 +150,10 @@ export default function Comments({ postId, comments, authUserId,postuserId }: Co
                             </Avatar>
                             <div className="flex-1">
                                 <div className="flex items-center">
-                                <p className="font-semibold text-gray-900 dark:text-gray-100">{comment.user.name}</p>
-                                {postuserId === comment.user.id &&  <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 ml-2">
-                                  - author
-                                </p>}
+                                    <p className="font-semibold text-gray-900 dark:text-gray-100">{comment.user.name}</p>
+                                    {postuserId === comment.user.id && <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 ml-2">
+                                        - author
+                                    </p>}
                                 </div>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
                                     {dayjs(comment.created_at).fromNow()}
@@ -161,12 +162,12 @@ export default function Comments({ postId, comments, authUserId,postuserId }: Co
                                     {comment.comment}
                                 </p>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 cursor-pointer" onClick={() => setReplyingTo(comment)}>
-                                   <strong>Reply</strong>
+                                    <strong>Reply</strong>
                                 </p>
                                 {comment.replies && comment.replies.length > 0 && (
                                     <div className="mt-3 space-y-3 border-l-2 border-gray-300 dark:border-gray-700 pl-3">
                                         {comment.replies.map((reply) => (
-                                            <Reply key={reply.id} replies={reply} authUserId={authUserId} postuserId={postuserId}/>
+                                            <Reply key={reply.id} replies={reply} authUserId={authUserId} postuserId={postuserId} />
                                         ))}
                                     </div>
                                 )}
@@ -203,8 +204,8 @@ export default function Comments({ postId, comments, authUserId,postuserId }: Co
                     id="comment"
                     type="text"
                     required
-                    ref={inputRef} // Attach the ref to the input
-                    autoFocus={!replyingTo} // Autofocus only for comments, manually focus for replies
+                    ref={inputRef} 
+                    autoFocus={!replyingTo} 
                     placeholder={replyingTo ? "Write a reply..." : "Write a comment..."}
                     value={replyingTo ? replyText : commentText}
                     onChange={(e) =>

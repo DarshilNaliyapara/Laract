@@ -17,13 +17,13 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/posts',
     },
 ];
+
 type PosteditForm = {
     title: string;
     post: string;
     file: File | null;
 
 };
-
 
 interface Link {
     url: string;
@@ -40,7 +40,6 @@ interface Blog {
     photo_name: string;
     slug: string;
 }
-
 
 export default function PostEdit({ blog }: { blog: Blog }) {
     const [title, setTitle] = useState<string>(blog.posts.title);
@@ -95,9 +94,7 @@ export default function PostEdit({ blog }: { blog: Blog }) {
                 icon: "error",
             });
         }
-
     };
-
 
     return (
 
@@ -178,20 +175,11 @@ export default function PostEdit({ blog }: { blog: Blog }) {
                                         Cancel
                                     </Button>
                                 </Link>
-
-
-
                             </div>
-
                         </div>
-
-
                     </form>
                 </div>
-
-
             </div>
-
         </AppLayout>
     );
 }

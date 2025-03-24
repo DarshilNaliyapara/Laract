@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Pencil, Trash2 } from "lucide-react";
@@ -7,7 +6,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "@inertiajs/react";
 import Comments from "../comment";
 import { type SharedData } from '@/types';
-import Zoom from 'react-medium-image-zoom';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { router } from "@inertiajs/react";
 import Swal from "sweetalert2";
@@ -107,7 +105,7 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
 
         return truncatedText;
     };
-    
+
     return (
         <div key={post.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
             <div className="p-3">

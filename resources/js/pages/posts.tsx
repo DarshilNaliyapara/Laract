@@ -198,7 +198,6 @@ export default function Posts({ posts }: { posts: PostsData }) {
             setCurrentPage={(page) => setData('page', page)} />
         }
       </div>
-
     </AppLayout>
   );
 }

@@ -51,10 +51,7 @@ export default function Reply({ replies, authUserId, postuserId }: ReplyProps) {
                         )}
                     </>
                 ) : (<></>)}
-
-
             </div>
-
         </div>
     );
 }

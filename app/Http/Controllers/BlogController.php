@@ -99,7 +99,6 @@ class BlogController extends Controller
             $blog->update(['posts' => json_encode($validated), 'slug' => $slug]);
         }
 
-
         return redirect(route('home'));
 
     }

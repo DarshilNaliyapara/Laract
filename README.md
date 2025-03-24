@@ -12,7 +12,7 @@
 - 💬 Commenting,Reply And Like system
 - 🔐 User authentication with Laravel Breeze & Inertia.js
 - 🔎 Global search functionality
-- ⚠️ Alerts and popups using SweetAlert2
+- ⚠️ Alerts and popups using SweetAlert2 and react-hot-toast
 - 🌙 Dark mode support
 - 🏗️ Admin panel for managing blog posts
 

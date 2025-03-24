@@ -92,7 +92,6 @@ export default function PostShow({ blog }: { blog: Blog }) {
                                     {blog.posts.title}
                                 </h2>
 
-                                {/* Image with Zoom */}
                                 {blog.photo_name && (
                                     <div className="flex flex-wrap gap-4 mt-3">
                                         <div className="relative w-full md:w-1/2 lg:w-1/3">

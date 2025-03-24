@@ -9,7 +9,7 @@
 
 ## ✨ Features
 - 📝 Create, edit, and delete blog posts
-- 💬 Commenting And Like system
+- 💬 Commenting,Reply And Like system
 - 🔐 User authentication with Laravel Breeze & Inertia.js
 - 🔎 Global search functionality
 - ⚠️ Alerts and popups using SweetAlert2

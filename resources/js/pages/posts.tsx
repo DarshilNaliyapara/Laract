@@ -81,11 +81,24 @@ export default function Posts({ posts }: { posts: PostsData }) {
     }
   };
 
-  const submit: FormEventHandler = async (e) => {
-
-    e.preventDefault();
-    await post(route('blogs.store'), {
-      onSuccess: () => toast.success('Post Created Successfully', {
+  const submit: FormEventHandler = (e) => {
+    try {
+      e.preventDefault();
+       post(route('blogs.store'), {
+        onSuccess: () => toast.success('Post Created Successfully', {
+          style: {
+            borderRadius: '10px',
+            background: 'rgba(1, 1, 1, 0.3)',
+            color: '#fff',
+            backdropFilter: 'blur(30px)',
+            border: '1px solid rgba(200, 200, 200, 0.2)',
+            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
+          },
+        })
+      },
+      );
+    } catch (e) {
+      toast.error(`Something went Wrong!`, {
         style: {
           borderRadius: '10px',
           background: 'rgba(1, 1, 1, 0.3)',
@@ -94,9 +107,8 @@ export default function Posts({ posts }: { posts: PostsData }) {
           border: '1px solid rgba(200, 200, 200, 0.2)',
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
         },
-      })
-    },
-    );
+      });
+    }
   };
 
   const [commentingPost, setCommentingPost] = useState<number | null>(null);

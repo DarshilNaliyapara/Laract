@@ -65,12 +65,26 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
+                try {
+                    router.post(route('blogs.destroy', slug), {
+                        _method: 'delete',
 
-                router.post(route('blogs.destroy', slug), {
-                    _method: 'delete',
+                    }, {
+                        onSuccess: () => toast.success('Post Deleted Successfully', {
+                            style: {
+                                borderRadius: '10px',
+                                background: 'rgba(1, 1, 1, 0.3)',
+                                color: '#fff',
+                                backdropFilter: 'blur(30px)',
+                                border: '1px solid rgba(200, 200, 200, 0.2)',
+                                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
+                            },
+                        }),
 
-                }, {
-                    onSuccess: () => toast.success('Post Deleted Successfully', {
+                        preserveScroll: true
+                    });
+                } catch (e) {
+                    toast.error(`Something went Wrong!`, {
                         style: {
                             borderRadius: '10px',
                             background: 'rgba(1, 1, 1, 0.3)',
@@ -79,19 +93,8 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
                             border: '1px solid rgba(200, 200, 200, 0.2)',
                             boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
                         },
-                    }),
-                    onError: () => toast.error('Failed to Deleted Post', {
-                        style: {
-                            borderRadius: '10px',
-                            background: 'rgba(1, 1, 1, 0.3)',
-                            color: '#fff',
-                            backdropFilter: 'blur(30px)',
-                            border: '1px solid rgba(200, 200, 200, 0.2)',
-                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
-                        },
-                    }),
-                    preserveScroll: true
-                });
+                    });
+                }
             }
         })
     };

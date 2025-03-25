@@ -38,15 +38,13 @@ class BlogController extends Controller
 
             'blog' => $blog
         ]);
-
-
     }
 
     public function store(Request $request)
     {
 
         $validated = $request->validate([
-            'title' => 'required|min:5|max:60|string',
+            'title' => 'required|min:5|max:80|string',
             'post' => 'required|min:15|max:5000|string|regex:/^[^<>]*$/',
             'file' => 'nullable|mimes:jpeg,jpg,png|max:5000',
         ]);
@@ -74,7 +72,7 @@ class BlogController extends Controller
 
         $blogdelete = Blog::where('slug', $blog->slug)->firstOrFail(); // Retrieve a single blog post
         $validated = $request->validate([
-            'title' => 'required|min:5|max:60|string',
+            'title' => 'required|min:5|max:80|string',
             'post' => 'required|min:15|max:5000|string|regex:/^[^<>]*$/',
             'file' => 'nullable|mimes:jpeg,jpg,png|max:5000',
         ]);

@@ -36,16 +36,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
         e.preventDefault();
         post(route('login'), {
             onFinish: () => reset('password'),
-            onSuccess: () => toast.success("Login Successful!", {
-               style: {
-                        borderRadius: '10px',
-                        background: 'rgba(1, 1, 1, 0.3)', 
-                        color: '#fff',
-                        backdropFilter: 'blur(30px)', 
-                        border: '1px solid rgba(200, 200, 200, 0.2)', 
-                        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)' 
-                    },
-            })
+            onSuccess: () => toast.success("Login Successful!")
         });
     };
 

@@ -80,28 +80,10 @@ export default function PostEdit({ blog }: { blog: Blog }) {
             router.post(route('blogs.update', blog.slug), formData, {
                 onFinish: () => setProcessing(false),
                 onSuccess: () =>
-                    toast.success('Post Updated Successfully', {
-                        style: {
-                            borderRadius: '10px',
-                            background: 'rgba(1, 1, 1, 0.3)',
-                            color: '#fff',
-                            backdropFilter: 'blur(30px)',
-                            border: '1px solid rgba(200, 200, 200, 0.2)',
-                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
-                        },
-                    }),
+                    toast.success('Post Updated Successfully'),
             });
         } catch (e) {
-            toast.error('Something went Wrong!', {
-                style: {
-                    borderRadius: '10px',
-                    background: 'rgba(1, 1, 1, 0.3)',
-                    color: '#fff',
-                    backdropFilter: 'blur(30px)',
-                    border: '1px solid rgba(200, 200, 200, 0.2)',
-                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
-                },
-            })
+            toast.error('Something went Wrong!')
         }
 
     };

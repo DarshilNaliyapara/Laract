@@ -90,11 +90,17 @@ npm run dev
 ### Blog Comment Section:
 ![Commenting System](Screenshots/Blog_Comment.png)
 
+### Admin Show:
+![Commenting System](Screenshots/Admin_Show.png)
+
 ### Blog Search:
 ![Commenting System](Screenshots/Blog_search.png)
 
-### SweetAlert2:
+### react-hot-toast:
 ![Commenting System](Screenshots/Post_create_success.png)
+
+### SweetAlert2 Delete Confirmation:
+![Commenting System](Screenshots/Delete_confirmation.png)
 
 ### Login Page:
 ![Commenting System](Screenshots/Login.png)

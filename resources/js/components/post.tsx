@@ -73,7 +73,7 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
                         color: "#fff",
                         backdropFilter: "blur(10px)",
                         border: "1px solid rgba(200, 200, 200, 0.2)",
-                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
+                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)",
                         padding: "20px",
                     });
                 }

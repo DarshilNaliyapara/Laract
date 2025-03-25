@@ -90,6 +90,9 @@ npm run dev
 ### Blog Comment Section:
 ![Commenting System](Screenshots/Blog_Comment.png)
 
+### Admin Show:
+![Commenting System](Screenshots/Admin_show.png)
+
 ### Blog Search:
 ![Commenting System](Screenshots/Blog_search.png)
 

@@ -71,7 +71,7 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
                         borderRadius: "20px",
                         background: "rgba(3, 3, 3, 0.5)",
                         color: "#fff",
-                        backdropFilter: "blur(10px)",
+                        backdropFilter: "blur(15px)",
                         border: "1px solid rgba(200, 200, 200, 0.2)",
                         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)",
                         padding: "20px",

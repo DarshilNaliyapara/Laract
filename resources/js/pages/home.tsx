@@ -5,7 +5,6 @@ import Pagination from '@/components/paginate';
 import { Link } from '@inertiajs/react';
 import Post from '@/components/post';
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -80,7 +79,7 @@ export default function Home({ posts }: { posts: PostsData }) {
                         currentPage={posts.current_page}
                         setCurrentPage={(page) => setData('page', page)} />
                 }
-            </div>
+             </div>
         </AppLayout>
     );
 }

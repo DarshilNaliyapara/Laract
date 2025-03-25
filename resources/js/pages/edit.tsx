@@ -10,12 +10,11 @@ import { Label } from '@/components/ui/label';
 import { router, Link } from '@inertiajs/react';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
-import Swal from "sweetalert2";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Post Edit',
-        href: '/posts',
+        title: 'Posts',
+        href: '/blogs/edit',
     },
 ];
 

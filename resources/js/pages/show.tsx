@@ -15,8 +15,8 @@ import 'react-medium-image-zoom/dist/styles.css';
 dayjs.extend(relativeTime);
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Post Show',
-        href: '/posts',
+        title: 'Posts',
+        href: '/blogs',
     },
 ];
 

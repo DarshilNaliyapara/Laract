@@ -9,7 +9,7 @@ import { router } from '@inertiajs/react';
 import { SearchIcon } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Laract', href: '/home' },
+    { title: 'Laract', href: '/' },
 ];
 
 interface Post {

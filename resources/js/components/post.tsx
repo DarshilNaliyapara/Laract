@@ -62,7 +62,23 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes, delete it!",
+            background: 'rgba(44, 53, 57, 0.2)',
+            willOpen: () => {
+                const swalPopup = document.querySelector(".swal2-popup") as HTMLElement;
+                if (swalPopup) {
+                    Object.assign(swalPopup.style, {
+                        borderRadius: "10px",
+                        background: "rgba(3, 3, 3, 0.5)",
+                        color: "#fff",
+                        backdropFilter: "blur(10px)",
+                        border: "1px solid rgba(200, 200, 200, 0.2)",
+                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
+                        padding: "20px",
+                    });
+                }
+            },
+
         }).then((result) => {
             if (result.isConfirmed) {
                 try {

@@ -90,7 +90,7 @@ export default function Comments({ postId, comments, authUserId, postuserId }: C
             });
 
         } catch (e) {
-            toast.error('Failed to Deleted Comment')
+            toast.error('Something went Wrong!')
         }
     };
 

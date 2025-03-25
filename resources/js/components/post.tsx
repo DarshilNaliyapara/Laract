@@ -68,7 +68,7 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
                 const swalPopup = document.querySelector(".swal2-popup") as HTMLElement;
                 if (swalPopup) {
                     Object.assign(swalPopup.style, {
-                        borderRadius: "10px",
+                        borderRadius: "20px",
                         background: "rgba(3, 3, 3, 0.5)",
                         color: "#fff",
                         backdropFilter: "blur(10px)",

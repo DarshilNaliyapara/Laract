@@ -93,8 +93,11 @@ npm run dev
 ### Blog Search:
 ![Commenting System](Screenshots/Blog_search.png)
 
-### SweetAlert2:
+### react-hot-toast:
 ![Commenting System](Screenshots/Post_create_success.png)
+
+### SweetAlert2 Delete Confirmation:
+![Commenting System](Screenshots/Delete_confirmation.png)
 
 ### Login Page:
 ![Commenting System](Screenshots/Login.png)

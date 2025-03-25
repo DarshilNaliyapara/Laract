@@ -91,7 +91,7 @@ npm run dev
 ![Commenting System](Screenshots/Blog_Comment.png)
 
 ### Admin Show:
-![Commenting System](Screenshots/Admin_show.png)
+![Commenting System](Screenshots/Admin_Show.png)
 
 ### Blog Search:
 ![Commenting System](Screenshots/Blog_search.png)

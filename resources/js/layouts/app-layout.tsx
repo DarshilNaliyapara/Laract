@@ -15,7 +15,7 @@ export default ({ children, breadcrumbs, ...props }: AppLayoutProps) => (
                 borderRadius: '10px',
                 background: 'rgba(44, 53, 57, 0.2)',
                 color: '#fff',
-                backdropFilter: 'blur(30px)',
+                backdropFilter: 'blur(20px)',
                 border: '1px solid rgba(200, 200, 200, 0.2)',
                 boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
             }

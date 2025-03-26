@@ -63,7 +63,6 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!",
-            background: 'rgba(44, 53, 57, 0.2)',
             willOpen: () => {
                 const swalPopup = document.querySelector(".swal2-popup") as HTMLElement;
                 if (swalPopup) {

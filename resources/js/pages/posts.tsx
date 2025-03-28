@@ -127,7 +127,7 @@ export default function Posts({ posts }: { posts: PostsData }) {
                 <Label htmlFor="post">Post</Label>
                 <textarea
                   id="post"
-                  className='border-textarea h-20 file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'
+                  className="w-full h-20 rounded-md border px-3 py-1 text-base outline-none disabled:opacity-50"
                   tabIndex={2}
                   autoComplete="post"
                   value={data.post}
@@ -146,18 +146,18 @@ export default function Posts({ posts }: { posts: PostsData }) {
                   onChange={handleFileChange}
                   name="file" accept=".jpg,.png,.jpeg"
                   data-toggle="tooltip" title="Choose Image file Less then 5Mb"
-                  className="block file:cursor-pointer file:mr-4 file:rounded-full file:border-0 file:bg-gray-500 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-300 hover:file:bg-gray-700 dark:file:bg-gray-600 dark:file:text-black-900 dark:hover:file:bg-gray-700 ..."
+                  className="block file:cursor-pointer w-full file:mr-4 file:rounded-full file:border-0 file:bg-gray-500 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-300 hover:file:bg-gray-700 dark:file:bg-gray-600 dark:file:text-black-900 dark:hover:file:bg-gray-700 ..."
                 />
                 <InputError message={errors.file} />
               </div>
               {filepreview &&
                 <div className="flex flex-wrap gap-4 mt-3">
-                  <div className="relative  md:w-1/2 lg:w-1/3 flex items-start">
+                  <div className="relative md:w-1/2 lg:w-1/3 flex items-start">
                     <div className=" flex overflow-hidden rounded-lg">
                       <img
                         src={filepreview}
                         alt="Blog Preview"
-                        className="cursor-pointer rounded-lg shadow-lg  max-h-96 object-contain"
+                        className="cursor-pointer rounded-lg shadow-lg max-h-96 object-contain"
                       />
                     </div>
                   </div>

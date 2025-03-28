@@ -24,6 +24,7 @@ Route::get('/', function (Request $request) {
         ->withCount(['likes', 'comments'])
         ->orderBy('created_at', 'desc')
         ->paginate(perPage: 5)
+        ->onEachSide(1) 
         ->through(function ($post) {
             $post->posts = json_decode($post->posts, true);
             $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
@@ -48,6 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 ->withCount(['likes', 'comments'])
                 ->orderBy('created_at', 'desc')
                 ->paginate(perPage: 5)
+                ->onEachSide(1)
                 ->through(function ($post) {
                     $post->posts = json_decode($post->posts, true);
                     $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
@@ -91,6 +93,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->withCount(['likes', 'comments'])
             ->orderBy('updated_at', 'desc')
             ->paginate(2)
+            ->onEachSide(5)
             ->through(function ($post) {
                 $post->posts = json_decode($post->posts, true);
                 $post->liked = $post->likes()->where('user_id', auth()->id())->exists();

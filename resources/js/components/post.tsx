@@ -126,14 +126,14 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
                                 </AvatarFallback>
                             </Avatar>
                             <span className="text-sm text-gray-600 dark:text-gray-400">{post.user.name}</span>
-                            <small className="text-sm text-gray-400 dark:text-gray-500">
+                            <span className="text-sm text-gray-400 dark:text-gray-500">
                                 {dayjs(post.created_at).fromNow()}
 
                                 {post.created_at !== post.updated_at && (
                                     <small className="text-sm text-gray-400 ml-2 dark:text-gray-500">- edited</small>
                                 )}
 
-                            </small>
+                            </span>
                         </div>
 
                         <div className="text-right flex gap-2 justify-end">

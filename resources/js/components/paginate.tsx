@@ -21,11 +21,11 @@ const Pagination: React.FC<PaginationProps> = ({ links, currentPage, setCurrentP
         router.get(url);
     }
     return (
-        <nav className="flex justify-center mb-6">
+        <nav className=" flex flex-wrap justify-center mb-6">
             {links.map(link => (
                 <Link
-                key={link.label}
-                    onClick={(e)=>{
+                    key={link.label}
+                    onClick={(e) => {
                         e.preventDefault();
                         if (link.url) {
                             handlePageChange(link.url);
@@ -33,7 +33,7 @@ const Pagination: React.FC<PaginationProps> = ({ links, currentPage, setCurrentP
                     }}
                     preserveScroll
                     href={link.url || ""}
-                    className={`flex items-center justify-center px-3 py-2 text-sm rounded-lg text-gray-600 
+                           className={`flex items-center justify-center leading-4 px-3 py-2 text-sm rounded-lg text-gray-600 
                         ${link.active ? "bg-gray-200" : ""} 
                         ${!link.url ? "text-gray-300 pointer-events-none" : ""}`}
                     dangerouslySetInnerHTML={{ __html: link.label }}

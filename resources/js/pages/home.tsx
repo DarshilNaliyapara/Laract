@@ -47,9 +47,11 @@ interface PostsData {
 }
 
 export default function Home({ posts }: { posts: PostsData }) {
+    console.log(posts.links);
     const { data, setData } = useForm({
         page: posts.current_page
     });
+    console.log(posts.links);
     const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
     const toggleComment = (postId: number) => {
@@ -76,10 +78,10 @@ export default function Home({ posts }: { posts: PostsData }) {
                 {formattedPosts.length > 0 &&
                     <Pagination
                         links={posts.links}
-                        currentPage={posts.current_page}
                         setCurrentPage={(page) => setData('page', page)} />
                 }
              </div>
         </AppLayout>
     );
+    
 }

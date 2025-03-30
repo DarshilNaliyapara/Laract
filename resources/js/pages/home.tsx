@@ -78,6 +78,7 @@ export default function Home({ posts }: { posts: PostsData }) {
                 {formattedPosts.length > 0 &&
                     <Pagination
                         links={posts.links}
+                        currentPage={posts.current_page}
                         setCurrentPage={(page) => setData('page', page)} />
                 }
              </div>

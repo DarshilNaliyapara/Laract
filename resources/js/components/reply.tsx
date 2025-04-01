@@ -54,8 +54,8 @@ export default function Reply({ replies, authUserId, postuserId }: ReplyProps) {
                 {authUserId ? (
                     <>
                         {(authUserId === replies.user_id || route().current('blogs.adminshow')) && (
-                            <p className="text-xs text-red-600 dark:text-red-400 mt-0.5 underline cursor-pointer" onClick={() => deleteReply(replies.id)}>
-                                Delete
+                            <p className="text-xs text-red-600 dark:text-red-400 mt-0.5 underline" >
+                                <span className="cursor-pointer" onClick={() => deleteReply(replies.id)}>Delete</span>
                             </p>
                         )}
                     </>

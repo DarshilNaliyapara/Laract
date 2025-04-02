@@ -104,7 +104,7 @@ export default function Posts({ posts }: { posts: PostsData }) {
 
       <Head title="Posts" />
       <div className="flex h-auto flex-1 flex-col gap-4 rounded-xl p-4">
-        <div className="border-sidebar-border/70 dark:border-sidebar-border relative overflow-hidden rounded-xl border p-4">
+        <div className="border-sidebar-border/70 dark:border-sidebar-border relative overflow-hidden rounded-xl border-2 p-4">
           <form className="flex flex-col gap-6" onSubmit={submit}>
             <div className="grid gap-6">
               <div className="grid gap-2">

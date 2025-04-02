@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Comment;
 use App\Models\Like;
+use App\Models\Notification;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Photo;
@@ -104,7 +105,7 @@ class BlogController extends Controller
                 'comments' => function ($query) {
                     $query->with([
                         'user:id,name,avatar',
-                        'replies'=> function ($query) {
+                        'replies' => function ($query) {
                             $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
                         }
                     ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
@@ -130,7 +131,7 @@ class BlogController extends Controller
                 'comments' => function ($query) {
                     $query->with([
                         'user:id,name,avatar',
-                        'replies'=> function ($query) {
+                        'replies' => function ($query) {
                             $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
                         }
                     ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
@@ -165,11 +166,18 @@ class BlogController extends Controller
     public function like(Blog $blog)
     {
         $bloglike = Blog::where('slug', $blog->slug)->firstOrFail();
-        // Log::info("Checking path: " . $blog);
         Like::create([
             'user_id' => Auth::user()->id,
             'blog_id' => $bloglike->id
         ]);
+        $posts = json_decode($blog->posts, true);
+     
+        if ($blog->user_id !== Auth::user()->id) {
+            Notification::create([
+                'notification' => Auth::user()->name . ' liked your post about: "' . $posts['title'] . '"',
+                'user_id' => $blog->user_id,
+            ]);
+        }
         return redirect()->back()->with('success', 'Post liked successfully.');
     }
     public function dislike(Blog $blog)
@@ -190,7 +198,7 @@ class BlogController extends Controller
                 'comments' => function ($query) {
                     $query->with([
                         'user:id,name,avatar',
-                        'replies'=> function ($query) {
+                        'replies' => function ($query) {
                             $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
                         }
                     ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
@@ -209,8 +217,6 @@ class BlogController extends Controller
 
             'blog' => $latest
         ]);
-
-
     }
 
 }

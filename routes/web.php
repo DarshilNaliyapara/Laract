@@ -4,6 +4,7 @@ use App\Models\Blog;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Comment;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +49,25 @@ Route::get('/', function (Request $request) {
 })->name('welcome');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('notifications', function () {
+        $authuser = Auth::user();
+        $notifications = Notification::where('user_id', $authuser->id)->latest()
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return Inertia::render('notifications', [
+            'notifications' => $notifications
+        ]);
+
+    })->name('notifications');
+
+    Route::post('notifications/{notification}', function (Notification $notification) {
+        if ($notification->user_id !== Auth::user()->id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        $notification->delete();
+        return response()->json(['success' => 'Notification deleted']);
+    })->name('notifications.destroy');
+
     Route::get('home', function (User $user, Request $request) {
 
         $authuser = Auth::user();

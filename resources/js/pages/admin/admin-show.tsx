@@ -65,7 +65,7 @@ export default function PostShow({ blog }: { blog: Blog }) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Posts" />
             <div className="flex h-auto flex-1 flex-col gap-4 rounded-xl p-4">
-                <div key={blog.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
+                <div key={blog.id} className="w-full rounded-xl border-2 shadow-lg overflow-hidden">
                     <div className="p-4">
                         <div className="flex flex-col">
                             <div className="flex items-center space-x-2">

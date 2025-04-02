@@ -59,7 +59,7 @@ export default function PostGuestShow({ blog }: { blog: Blog }) {
 
     return (
         <>
-            <Head title="Laract">
+            <Head title="Laract - Show Post">
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
@@ -79,7 +79,7 @@ export default function PostGuestShow({ blog }: { blog: Blog }) {
 
                 <main className="flex-grow flex p-4">
                     <div className="flex flex-1 flex-col gap-4 rounded-xl p-4">
-                        <div key={blog.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
+                        <div key={blog.id} className="w-full rounded-xl border-2 shadow-lg overflow-hidden">
                             <div className="p-4">
                                 <div className="flex flex-col">
                                     <div className="flex items-center space-x-2">

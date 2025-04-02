@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Posts',
+        title: 'Edit Post',
         href: '/blogs/edit',
     },
 ];
@@ -90,7 +90,7 @@ export default function PostEdit({ blog }: { blog: Blog }) {
     return (
 
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Posts" />
+            <Head title="Edit Post" />
 
             <div className="flex h-auto flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative overflow-hidden rounded-xl border p-4">

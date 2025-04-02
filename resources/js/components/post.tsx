@@ -114,7 +114,7 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
     };
 
     return (
-        <div key={post.id} className="w-full rounded-xl border shadow-lg overflow-hidden">
+        <div key={post.id} className="w-full rounded-xl border-2 shadow-lg overflow-hidden">
             <div className="p-3">
                 <div className="flex flex-col m-1">
                     <div className="flex justify-between">

@@ -61,11 +61,7 @@ class BlogController extends Controller
         } else {
             $blog = $request->user()->blog()->create(['posts' => json_encode($validated), 'slug' => $slug]);
         }
-
-
-
         return redirect()->route('home')->with('success', 'Blog created successfully.');
-
     }
     public function update(Request $request, Blog $blog)
     {
@@ -103,9 +99,20 @@ class BlogController extends Controller
     public function show(Blog $blog)
     {
         $latest = Blog::where('slug', $blog->slug)
-            ->with('user:id,name,avatar', 'comments.user:id,name,avatar', 'comments.replies.user:id,name,avatar')
+            ->with([
+                'user:id,name,avatar',
+                'comments' => function ($query) {
+                    $query->with([
+                        'user:id,name,avatar',
+                        'replies'=> function ($query) {
+                            $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
+                        }
+                    ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
+                }
+            ])
             ->withCount(['comments'])
             ->firstOrFail();
+        $latest->comments_count += $latest->comments->sum('replies_count');
         $latest->posts = json_decode($latest->posts, true);
         $latest->comments = $latest->comments()->with('user:id,name')->get();
 
@@ -118,9 +125,20 @@ class BlogController extends Controller
     public function guestshow(Blog $blog)
     {
         $latest = Blog::where('slug', $blog->slug)
-            ->with('user:id,name,avatar', 'comments.user:id,name,avatar', 'comments.replies.user:id,name,avatar')
+            ->with([
+                'user:id,name,avatar',
+                'comments' => function ($query) {
+                    $query->with([
+                        'user:id,name,avatar',
+                        'replies'=> function ($query) {
+                            $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
+                        }
+                    ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
+                }
+            ])
             ->withCount(['comments'])
             ->firstOrFail();
+        $latest->comments_count += $latest->comments->sum('replies_count');
         $latest->posts = json_decode($latest->posts, true);
         $latest->comments = $latest->comments()->with('user:id,name')->get();
 
@@ -167,9 +185,20 @@ class BlogController extends Controller
     public function adminshow(Blog $blog)
     {
         $latest = Blog::where('slug', $blog->slug)
-            ->with('user:id,name,avatar', 'comments.user:id,name,avatar', 'comments.replies.user:id,name,avatar')
+            ->with([
+                'user:id,name,avatar',
+                'comments' => function ($query) {
+                    $query->with([
+                        'user:id,name,avatar',
+                        'replies'=> function ($query) {
+                            $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
+                        }
+                    ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
+                }
+            ])
             ->withCount(['likes', 'comments'])
             ->firstOrFail();
+        $latest->comments_count += $latest->comments->sum('replies_count');
         $latest->replies_count = Comment::whereIn('blog_id', [$latest->id])
             ->withCount('replies')
             ->get()

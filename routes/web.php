@@ -11,21 +11,31 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 
 Route::get('/', function (Request $request) {
-    
+
     $authuser = Auth::user();
     if ($authuser) {
         return redirect(route('home'));
     }
-    
+
     $val = $request->input('search', '');
     $searchQuery = '%' . $val . '%';
     $posts = Blog::where('posts', 'LIKE', $searchQuery)
-        ->with(['user:id,name,avatar', 'comments.user:id,name,avatar', 'comments.replies.user:id,name,avatar'])
+        ->with([
+            'user:id,name,avatar',
+            'comments' => function ($query) {
+                $query->with([
+                    'user:id,name,avatar',
+                    'replies' => function ($query) {
+                        $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
+                    }
+                ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
+            }
+        ])
         ->withCount(['likes', 'comments'])
         ->orderBy('created_at', 'desc')
         ->paginate(perPage: 5)
-        ->onEachSide(1) 
         ->through(function ($post) {
+            $post->comments_count += $post->comments->sum('replies_count');
             $post->posts = json_decode($post->posts, true);
             $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
             return $post;
@@ -38,24 +48,34 @@ Route::get('/', function (Request $request) {
 })->name('welcome');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/home', function (User $user, Request $request) {
-       
+    Route::get('home', function (User $user, Request $request) {
+
         $authuser = Auth::user();
         if ($authuser) {
             $val = $request->input('search', '');
             $searchQuery = '%' . $val . '%';
             $posts = Blog::where('posts', 'LIKE', $searchQuery)
-                ->with(['user:id,name,avatar', 'comments.user:id,name,avatar', 'comments.replies.user:id,name,avatar'])
+                ->with([
+                    'user:id,name,avatar',
+                    'comments' => function ($query) {
+                        $query->with([
+                            'user:id,name,avatar',
+                            'replies' => function ($query) {
+                                $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
+                            }
+                        ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
+                    }
+                ])
                 ->withCount(['likes', 'comments'])
                 ->orderBy('created_at', 'desc')
-                ->paginate(perPage: 5)
-                ->onEachSide(1)
+                ->paginate(5)
                 ->through(function ($post) {
+                    $post->comments_count += $post->comments->sum('replies_count');
                     $post->posts = json_decode($post->posts, true);
                     $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
                     return $post;
                 });
-
+            Log::info($posts);
             return Inertia::render('home', [
                 'posts' => $posts
             ]);
@@ -71,11 +91,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
         }
 
         $posts = Auth::user()->blog()
-            ->with(['user:id,name', 'comments.user:id,name,avatar', 'comments.replies.user:id,name,avatar'])
+            ->with([
+                'user:id,name',
+                'comments' => function ($query) {
+                    $query->with([
+                        'user:id,name,avatar',
+                        'replies' => function ($query) {
+                            $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
+                        }
+                    ])->orderBy('created_at', 'desc')->withCount('replies');
+                }
+            ])
             ->withCount(['likes', 'comments'])
             ->orderBy('updated_at', 'desc')
             ->get()
             ->map(function ($post) {
+                $post->comments_count += $post->comments->sum('replies_count');
                 $post->posts = json_decode($post->posts, true);
                 return $post;
             });
@@ -89,12 +120,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect(route('home'));
         }
         $posts = Auth::user()->blog()
-            ->with(['user:id,name,avatar', 'comments.user:id,name,avatar', 'comments.replies.user:id,name,avatar'])
+            ->with([
+                'user:id,name,avatar',
+                'comments' => function ($query) {
+                    $query->with([
+                        'user:id,name,avatar',
+                        'replies' => function ($query) {
+                            $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
+                        }
+                    ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
+                }
+            ])
             ->withCount(['likes', 'comments'])
             ->orderBy('updated_at', 'desc')
             ->paginate(2)
-            ->onEachSide(5)
             ->through(function ($post) {
+                $post->comments_count += $post->comments->sum('replies_count');
                 $post->posts = json_decode($post->posts, true);
                 $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
                 return $post;

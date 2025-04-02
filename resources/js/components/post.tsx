@@ -169,12 +169,11 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
                     </div>
 
                     <div className="ml-10">
-                        <Link href={route().current('welcome') ? `/guest/${post.slug}` : `/blogs/${post.slug}`}>
-
-                            <h2 className="text-2xl mt-1 font-bold text-gray-900 dark:text-white underline">
+                        <span className="text-2xl mt-1 font-bold text-gray-900 dark:text-white underline">
+                            <Link href={route().current('welcome') ? `/guest/${post.slug}` : `/blogs/${post.slug}`}>
                                 {post.posts.title}
-                            </h2>
-                        </Link>
+                            </Link>
+                        </span>
 
                         {post.photo_name && (
                             <div className="flex flex-wrap gap-4 mt-3">

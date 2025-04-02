@@ -19,7 +19,7 @@ class BlogFactory extends Factory
                 'title' => $this->faker->sentence,
                 'post' => $this->faker->paragraph,
             ]),
-            'user_id' => 6, // Create a new user or use an existing one
+            'user_id' => 1, // Create a new user or use an existing one
             'slug' => Str::slug($title) . '-' . Str::random(5),
             
         ];

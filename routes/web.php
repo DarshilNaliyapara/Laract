@@ -25,7 +25,11 @@ Route::get('/', function (Request $request) {
             'comments' => function ($query) {
                 $query->with([
                     'user:id,name,avatar',
+<<<<<<< HEAD
                     'replies'=> function ($query) {
+=======
+                    'replies' => function ($query) {
+>>>>>>> 7876cd907adfccfe2461a2e00a4a97ffde34419b
                         $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
                     }
                 ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
@@ -60,7 +64,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     'comments' => function ($query) {
                         $query->with([
                             'user:id,name,avatar',
+<<<<<<< HEAD
                             'replies'=> function ($query) {
+=======
+                            'replies' => function ($query) {
+>>>>>>> 7876cd907adfccfe2461a2e00a4a97ffde34419b
                                 $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
                             }
                         ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
@@ -96,7 +104,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'comments' => function ($query) {
                     $query->with([
                         'user:id,name,avatar',
+<<<<<<< HEAD
                         'replies'=> function ($query) {
+=======
+                        'replies' => function ($query) {
+>>>>>>> 7876cd907adfccfe2461a2e00a4a97ffde34419b
                             $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
                         }
                     ])->orderBy('created_at', 'desc')->withCount('replies');
@@ -125,7 +137,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'comments' => function ($query) {
                     $query->with([
                         'user:id,name,avatar',
+<<<<<<< HEAD
                         'replies'=> function ($query) {
+=======
+                        'replies' => function ($query) {
+>>>>>>> 7876cd907adfccfe2461a2e00a4a97ffde34419b
                             $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
                         }
                     ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment

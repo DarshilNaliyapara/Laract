@@ -143,11 +143,7 @@ export default function Comments({ postId, comments, authUserId, postuserId }: C
                                 <p className="text-sm text-gray-800 dark:text-gray-300 mt-2 leading-relaxed">
                                     {comment.comment}
                                 </p>
-<<<<<<< HEAD
-                                <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 " >
-=======
                                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
->>>>>>> 7876cd907adfccfe2461a2e00a4a97ffde34419b
                                     <span className="cursor-pointer" onClick={() => setReplyingTo(comment)}> <strong>Reply</strong></span>
                                 </p>
                                 {comment.replies && comment.replies.length > 0 && (

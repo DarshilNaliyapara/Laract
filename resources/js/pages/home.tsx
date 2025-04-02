@@ -47,7 +47,6 @@ interface PostsData {
 }
 
 export default function Home({ posts }: { posts: PostsData }) {
-    console.log(posts.links);
     const { data, setData } = useForm({
         page: posts.current_page
     });

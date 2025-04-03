@@ -12,12 +12,10 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 
 Route::get('/', function (Request $request) {
-
     $authuser = Auth::user();
     if ($authuser) {
         return redirect(route('home'));
     }
-
     $val = $request->input('search', '');
     $searchQuery = '%' . $val . '%';
     $posts = Blog::where('posts', 'LIKE', $searchQuery)
@@ -41,11 +39,9 @@ Route::get('/', function (Request $request) {
             $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
             return $post;
         });
-
     return Inertia::render('guest/welcome', [
         'posts' => $posts
     ]);
-
 })->name('welcome');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -57,7 +53,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('notifications', [
             'notifications' => $notifications
         ]);
-
     })->name('notifications');
 
     Route::post('notifications/{notification}', function (Notification $notification) {
@@ -69,7 +64,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('notifications.destroy');
 
     Route::get('home', function (User $user, Request $request) {
-
         $authuser = Auth::user();
         if ($authuser) {
             $val = $request->input('search', '');

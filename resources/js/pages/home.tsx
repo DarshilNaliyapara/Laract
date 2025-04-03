@@ -50,7 +50,7 @@ export default function Home({ posts }: { posts: PostsData }) {
     const { data, setData } = useForm({
         page: posts.current_page
     });
-    console.log(posts.links);
+  
     const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
     const toggleComment = (postId: number) => {
@@ -74,7 +74,7 @@ export default function Home({ posts }: { posts: PostsData }) {
                     <p className="text-center text-gray-500 dark:text-gray-400">No posts available</p>
                 )}
 
-                {formattedPosts.length > 0 &&
+                {(formattedPosts.length > 0 || posts.links) &&
                     <Pagination
                         links={posts.links}
                         currentPage={posts.current_page}

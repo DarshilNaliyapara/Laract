@@ -104,6 +104,43 @@ Route::middleware(['auth', 'verified'])->group(function () {
         }
     })->name('home');
 
+    Route::get('likedposts', function (User $user, Request $request) {
+
+        $authuser = Auth::user();
+        if ($authuser) {
+            $val = $request->input('search', '');
+            $searchQuery = '%' . $val . '%';
+            $posts = Blog::where('posts', 'LIKE', $searchQuery)
+                ->whereHas('likes', function ($query) use ($authuser) {
+                    $query->where('user_id', $authuser->id);
+                })->with([
+                        'user:id,name,avatar',
+                        'comments' => function ($query) {
+                            $query->with([
+                                'user:id,name,avatar',
+                                'replies' => function ($query) {
+                                    $query->with(['user:id,name,avatar'])->orderBy('created_at', 'desc');
+                                }
+                            ])->withCount('replies')->orderBy('created_at', 'desc'); // Count replies per comment
+                        }
+                    ])
+                ->withCount(['likes', 'comments'])
+                ->orderBy('created_at', 'desc')
+                ->paginate(5)
+                ->through(function ($post) {
+                    $post->comments_count += $post->comments->sum('replies_count');
+                    $post->posts = json_decode($post->posts, true);
+                    $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
+                    return $post;
+                });
+            return Inertia::render('likedposts', [
+                'posts' => $posts
+            ]);
+        } else {
+            return redirect(route('login'));
+        }
+    })->name('likedposts');
+
     Route::get('dashboard', function () {
 
         if (!auth()->check()) {

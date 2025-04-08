@@ -29,7 +29,6 @@ export default function Notifications({ notifications }: { notifications: { id: 
             });
 
         } catch (error) {
-            console.error('Error deleting notification:', error);
             toast.error('Failed to delete notification.');
         }
     };

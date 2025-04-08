@@ -21,13 +21,11 @@ export default function Notifications({ notifications }: { notifications: { id: 
 
     const closeNotification = (id: number) => {
         try {
-            console.log('Deleting notification with ID:', id);
-
             axios.post(route('notifications.destroy', id)).then(() => {
                 setNotification((prevNotifications) =>
                     prevNotifications.filter((notification) => notification.id !== id)
-                );
-                toast.success('Cleared');
+            );
+            toast.success('Cleared');
             });
 
         } catch (error) {

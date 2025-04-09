@@ -190,7 +190,7 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
                                         <img
                                             src={`/storage/${post.photo_name}`}
                                             alt="Blog Preview"
-                                            className="cursor-pointer rounded-lg shadow-lg max-h-96 object-contain"
+                                            className="rounded-lg shadow-lg max-h-96 object-contain"
                                         />
                                     </div>
                                 </div>

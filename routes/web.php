@@ -59,9 +59,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if ($notification->user_id !== Auth::user()->id) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
+
         $notification->delete();
         return response()->json(['success' => 'Notification deleted']);
     })->name('notifications.destroy');
+
+    Route::post('Allnotifications/{notification}', function (Notification $notification) {
+        if ($notification->user_id !== Auth::user()->id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        Notification::where('user_id', $notification->user_id)->delete();
+
+        return response()->json(['success' => 'Notification deleted']);
+    })->name('Allnotifications.destroy');
+
 
     Route::get('home', function (User $user, Request $request) {
         $authuser = Auth::user();

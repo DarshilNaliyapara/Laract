@@ -47,6 +47,7 @@ interface PostsData {
 }
 
 export default function Likedposts({ posts }: { posts: PostsData }) {
+    console.log(posts.links)
     const { data, setData } = useForm({
         page: posts.current_page
     });
@@ -74,7 +75,7 @@ export default function Likedposts({ posts }: { posts: PostsData }) {
                     <p className="text-center text-gray-500 dark:text-gray-400">No posts available</p>
                 )}
 
-                {(formattedPosts.length > 0 || posts.links) &&
+                {(formattedPosts.length > 0 || posts.links.length > 2) &&
                     <Pagination
                         links={posts.links}
                         currentPage={posts.current_page}

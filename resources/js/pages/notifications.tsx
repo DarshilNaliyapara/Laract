@@ -54,7 +54,7 @@ export default function Notifications({ notifications }: { notifications: { id: 
                         <Button
                             type="submit"
                             className="w-20 cursor-pointer"
-                            onClick={() => notification.length > 0 && closeAllNotification(notifications[0].user_id)}
+                            onClick={() => closeAllNotification(notifications[0].user_id)}
                         >
                             Clear All
                         </Button>

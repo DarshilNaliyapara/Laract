@@ -17,7 +17,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Notifications({ notifications }: { notifications: { id: number; notification: string; created_at: string; user_id: number }[] }) {
     const [notification, setNotification] = useState(notifications);
-console.log(notifications);
+    console.log(notifications);
 
     const closeNotification = (id: number) => {
         try {
@@ -35,14 +35,12 @@ console.log(notifications);
 
     const closeAllNotification = (id: number) => {
         try {
-            axios.post(route('Allnotifications.destroy', id)).then(() => {
-                setNotification((prevNotifications) =>
-                    prevNotifications.filter((notification) => notification.id !== id)
-                );
+            axios.post(route('notifications.all', id)).then(() => {
+                setNotification([]);
                 toast.success('All Notifications Cleared');
             });
-
         } catch (error) {
+            console.log(error);
             toast.error('Failed to delete notification.');
         }
     };
@@ -51,10 +49,18 @@ console.log(notifications);
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Notifications" />
             <div className="flex flex-col gap-4 p-4">
-                {notification.map((notification) => (
-                    <Button type="submit" className="mt-2 w-20 cursor-pointer justify-end" onClick={() => closeAllNotification(notification.user_id)}>
-                        Clear All </Button>
-                ))}
+                {notification.length > 1 && (
+                    <div className="flex justify-end mt-2">
+                        <Button
+                            type="submit"
+                            className="w-20 cursor-pointer"
+                            onClick={() => notification.length > 0 && closeAllNotification(notifications[0].user_id)}
+                        >
+                            Clear All
+                        </Button>
+                    </div>
+                )}
+
                 {notification.map((notification) => (
                     <div key={notification.id} className="w-full rounded-xl border-2 shadow-lg overflow-hidden relative">
                         <button

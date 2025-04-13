@@ -47,7 +47,6 @@ interface PostsData {
 }
 
 export default function Likedposts({ posts }: { posts: PostsData }) {
-    console.log(posts.links)
     const { data, setData } = useForm({
         page: posts.current_page
     });
@@ -62,7 +61,7 @@ export default function Likedposts({ posts }: { posts: PostsData }) {
     const formattedPosts = Array.isArray(posts.data) ? posts.data : [];
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Home" />
+            <Head title="Liked Posts" />
             <div className="flex flex-col gap-4 p-4">
                 {formattedPosts.length > 0 ? (
                     formattedPosts.map((post) => {

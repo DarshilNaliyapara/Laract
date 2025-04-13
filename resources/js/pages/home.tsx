@@ -50,7 +50,7 @@ export default function Home({ posts }: { posts: PostsData }) {
     const { data, setData } = useForm({
         page: posts.current_page
     });
-  console.log(posts.links);
+ 
     const [commentingPost, setCommentingPost] = useState<number | null>(null);
 
     const toggleComment = (postId: number) => {

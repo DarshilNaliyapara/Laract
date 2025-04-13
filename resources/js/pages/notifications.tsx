@@ -17,7 +17,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Notifications({ notifications }: { notifications: { id: number; notification: string; created_at: string; user_id: number }[] }) {
     const [notification, setNotification] = useState(notifications);
-    console.log(notifications);
 
     const closeNotification = (id: number) => {
         try {

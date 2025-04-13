@@ -56,7 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('notifications');
 
     Route::post('notifications/{notification}', function (Notification $notification) {
-        if ($notification->user_id !== Auth::user()->id) {
+        if ($notification->user_id != Auth::user()->id) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
@@ -65,7 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('notifications.destroy');
 
     Route::post('notifications/all/{user_id}', function (Notification $notification,$user_id) {
-        if ($user_id !== Auth::user()->id) {
+        if ($user_id != Auth::user()->id) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
         $notification->where('user_id', $user_id)->delete();

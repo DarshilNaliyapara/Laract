@@ -21,7 +21,7 @@ type Notification = {
 };
 
 export default function Notifications() {
-    const [notification, setNotification] = useState<Notification[]>([]);
+    const [notificationResponse, setNotification] = useState<Notification[]>([]);
 
     const fetchnotifications = () => {
         try {
@@ -74,19 +74,19 @@ export default function Notifications() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Notifications" />
             <div className="flex flex-col gap-4 p-4">
-                {notification.length > 1 && (
+                {notificationResponse.length > 1 && (
                     <div className="flex justify-end mt-2">
                         <Button
                             type="submit"
                             className="w-20 cursor-pointer"
-                            onClick={() => closeAllNotification(notification[0].user_id)}
+                            onClick={() => closeAllNotification(notificationResponse[0].user_id)}
                         >
                             Clear All
                         </Button>
                     </div>
                 )}
 
-                {notification.map((notification) => (
+                {notificationResponse.map((notification) => (
                     <div key={notification.id} className="w-full rounded-xl border-2 shadow-lg overflow-hidden relative">
                         <button
                             className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 cursor-pointer"
@@ -110,7 +110,7 @@ export default function Notifications() {
                         </div>
                     </div>
                 ))}
-                {notification.length === 0 && <p className="text-center text-gray-500">No notifications</p>}
+                {notificationResponse.length === 0 && <p className="text-center text-gray-500">No notifications</p>}
             </div>
         </AppLayout>
     );

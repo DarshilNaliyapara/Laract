@@ -59,7 +59,6 @@ export default function Comments({ postId, comments, authUserId, postuserId }: C
     const submitComment = () => {
         if (commentText.trim() === "") {
             setErrors({ comment: "Comment cannot be empty." });
-
             return;
         }
         router.post(route('comments.store'), {

@@ -171,14 +171,20 @@ class BlogController extends Controller
             'blog_id' => $bloglike->id
         ]);
         $posts = json_decode($blog->posts, true);
-     
+
         if ($blog->user_id !== Auth::user()->id) {
             Notification::create([
                 'notification' => Auth::user()->name . ' liked your post about: "' . $posts['title'] . '"',
                 'user_id' => $blog->user_id,
             ]);
         }
-        return redirect()->back()->with('success', 'Post liked successfully.');
+        $likecount = Like::where('blog_id', $blog->id)->count();
+        return response()->json([
+            'success' => true,
+            'message' => 'Post liked successfully.',
+            'likecount' => $likecount
+        ]);
+
     }
     public function dislike(Blog $blog)
     {
@@ -188,7 +194,12 @@ class BlogController extends Controller
             ->where('blog_id', $blogdislike->id)
             ->delete();
 
-        return redirect()->back()->with('success', 'Post liked successfully.');
+        $likecount = Like::where('blog_id', $blog->id)->count();
+        return response()->json([
+            'success' => true,
+            'message' => 'Post liked successfully.',
+            'likecount' => $likecount
+        ]);
     }
     public function adminshow(Blog $blog)
     {

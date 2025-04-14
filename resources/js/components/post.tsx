@@ -11,6 +11,7 @@ import { router } from "@inertiajs/react";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 dayjs.extend(relativeTime);
 
@@ -44,19 +45,21 @@ interface PostProps {
 export default function Post({ post, commentingPost, toggleComment }: PostProps) {
     const { auth } = usePage<SharedData>().props;
     const [loading, setLoading] = useState(false);
-
-
+    const [liked, setLiked] = useState(post.liked);
+    const [likesCount, setLikesCount] = useState(post.likes_count);
 
     const like = (slug: string) => {
         setLoading(true);
-        router.post(route('blogs.like', slug), {}, {
-            preserveScroll: true,
-            onSuccess: () => setLoading(false)
+        axios.post(route('blogs.like', slug)).then((response) => {
+            setLiked(true);
+            setLikesCount(response.data.likecount);
+            setLoading(false);
         });
     }
     const dislike = (slug: string) => {
-        router.post(route('blogs.dislike', slug), {}, {
-            preserveScroll: true
+        axios.post(route('blogs.dislike', slug)).then((response) => {
+            setLiked(false);
+            setLikesCount(response.data.likecount);
         });
     }
 
@@ -144,7 +147,7 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
 
                         <div className="text-right flex gap-2 justify-end">
 
-                            {post.liked ? (
+                            {liked ? (
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
@@ -172,7 +175,7 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
                                     />
                                 </svg>
                             )}
-                            <span className="text-gray-600 dark:text-gray-400">{post.likes_count}</span>
+                            <span className="text-gray-600 dark:text-gray-400">{likesCount}</span>
                         </div>
                     </div>
 

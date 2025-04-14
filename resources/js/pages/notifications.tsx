@@ -17,7 +17,20 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Notifications({ notifications }: { notifications: { id: number; notification: string; created_at: string; user_id: number }[] }) {
     const [notification, setNotification] = useState(notifications);
-
+    const fetchnotifications = async () => {
+        try {
+            const response = await axios.post(route('notifications.api'));
+            console.log(response.data);
+            setNotification(response.data);
+        } catch (error) {
+            console.error('Error fetching notifications:', error);
+        }
+    };
+    setInterval(() => {
+        fetchnotifications();
+        console.log(notification)
+    }, 5000);
+    
     const closeNotification = (id: number) => {
         try {
             axios.post(route('notifications.destroy', id)).then(() => {
@@ -48,7 +61,7 @@ export default function Notifications({ notifications }: { notifications: { id: 
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Notifications" />
             <div className="flex flex-col gap-4 p-4">
-                {notification.length > 1 && (
+                {notification && (
                     <div className="flex justify-end mt-2">
                         <Button
                             type="submit"

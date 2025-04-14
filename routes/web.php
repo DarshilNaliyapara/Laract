@@ -46,14 +46,16 @@ Route::get('/', function (Request $request) {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('notifications', function () {
+        return Inertia::render('notifications');
+    })->name('notifications');
+
+    Route::post('notifications/api', function () {
         $authuser = Auth::user();
         $notifications = Notification::where('user_id', $authuser->id)->latest()
             ->orderBy('created_at', 'desc')
             ->get();
-        return Inertia::render('notifications', [
-            'notifications' => $notifications
-        ]);
-    })->name('notifications');
+        return response()->json(['notifications'=>$notifications]);
+    })->name('notifications.api');
 
     Route::post('notifications/{notification}', function (Notification $notification) {
         if ($notification->user_id != Auth::user()->id) {

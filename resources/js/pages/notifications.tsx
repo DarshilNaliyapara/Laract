@@ -2,35 +2,48 @@ import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import toast from 'react-hot-toast';
-
 
 dayjs.extend(relativeTime);
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Notifications', href: '/notifications' },
 ];
+type Notification = {
+    id: number;
+    notification: string;
+    created_at: string;
+    user_id: number;
+};
 
-export default function Notifications({ notifications }: { notifications: { id: number; notification: string; created_at: string; user_id: number }[] }) {
-    const [notification, setNotification] = useState(notifications);
-    const fetchnotifications = async () => {
+export default function Notifications() {
+    const [notification, setNotification] = useState<Notification[]>([]);
+
+    const fetchnotifications = () => {
         try {
-            const response = await axios.post(route('notifications.api'));
-            console.log(response.data);
-            setNotification(response.data);
+            axios.post(route('notifications.api')).then((response) => {
+                let data = response.data.notifications;
+                console.log(data);
+                setNotification(data);
+            });
+
         } catch (error) {
             console.error('Error fetching notifications:', error);
         }
     };
-    setInterval(() => {
+
+    useEffect(() => {
         fetchnotifications();
-        console.log(notification)
-    }, 5000);
-    
+        const interval = setInterval(() => {
+            fetchnotifications();
+        }, 25000);
+        return () => clearInterval(interval);
+    }, []);
+
     const closeNotification = (id: number) => {
         try {
             axios.post(route('notifications.destroy', id)).then(() => {
@@ -61,12 +74,12 @@ export default function Notifications({ notifications }: { notifications: { id: 
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Notifications" />
             <div className="flex flex-col gap-4 p-4">
-                {notification && (
+                {notification.length > 1 && (
                     <div className="flex justify-end mt-2">
                         <Button
                             type="submit"
                             className="w-20 cursor-pointer"
-                            onClick={() => closeAllNotification(notifications[0].user_id)}
+                            onClick={() => closeAllNotification(notification[0].user_id)}
                         >
                             Clear All
                         </Button>

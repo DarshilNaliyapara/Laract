@@ -208,10 +208,10 @@ export default function Post({ post, commentingPost, toggleComment }: PostProps)
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="flex items-center gap-2"
+                                className="flex items-center gap-2 group"
                                 onClick={() => toggleComment(post.id)}
                             >
-                                <MessageCircle className="w-4 h-4" />
+                                <MessageCircle className="w-4 h-4 group-hover:fill-gray-100" />
                                 Comments {post.comments_count ? <>({post.comments_count})</> : null}
                             </Button>
 

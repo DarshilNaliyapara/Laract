@@ -118,7 +118,6 @@ class BlogController extends Controller
         $latest->comments = $latest->comments()->with('user:id,name')->get();
 
         return Inertia::render('show', [
-
             'blog' => $latest
         ]);
 
@@ -181,7 +180,6 @@ class BlogController extends Controller
         $likecount = Like::where('blog_id', $blog->id)->count();
         return response()->json([
             'success' => true,
-            'message' => 'Post liked successfully.',
             'likecount' => $likecount
         ]);
 
@@ -197,7 +195,6 @@ class BlogController extends Controller
         $likecount = Like::where('blog_id', $blog->id)->count();
         return response()->json([
             'success' => true,
-            'message' => 'Post liked successfully.',
             'likecount' => $likecount
         ]);
     }
@@ -225,7 +222,6 @@ class BlogController extends Controller
         $latest->posts = json_decode($latest->posts, true);
         $latest->comments = $latest->comments()->with('user:id,name')->get();
         return Inertia::render('admin/admin-show', [
-
             'blog' => $latest
         ]);
     }

@@ -23,14 +23,11 @@ type Notification = {
 export default function Notifications() {
     const [notificationResponse, setNotification] = useState<Notification[]>([]);
 
-    const fetchnotifications = () => {
+    const fetchnotifications = async () => {
         try {
-            axios.post(route('notifications.api')).then((response) => {
+         const response = await axios.post(route('notifications.api'))
                 let data = response.data.notifications;
-                console.log(data);
                 setNotification(data);
-            });
-
         } catch (error) {
             console.error('Error fetching notifications:', error);
         }

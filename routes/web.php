@@ -49,6 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('notifications');
     })->name('notifications');
 
+
     Route::post('notifications/api', function () {
         $authuser = Auth::user();
         $notifications = Notification::where('user_id', $authuser->id)->latest()
@@ -102,7 +103,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     $post->liked = $post->likes()->where('user_id', auth()->id())->exists();
                     return $post;
                 });
-            Log::info($posts);
+           
             return Inertia::render('home', [
                 'posts' => $posts
             ]);
